@@ -1,4 +1,4 @@
-import { ForeignIdName, RequestQueryOptions } from "./shared";
+import { ForeignIdName, RequestConfigOptions, RequestConfigQueryOptions } from "./shared";
 export declare enum ScheduleClassType {
     LIVE = "OnlineClass",
     CLASSES = "OfflineClass",
@@ -6,7 +6,7 @@ export declare enum ScheduleClassType {
     TASK = "Task"
 }
 declare type RepeatEndType = `never` | `after_count` | `after_time`;
-declare type ScheduleRepeatType = "daily" | "weekly" | "monthly" | "yearly";
+declare type ScheduleRepeatType = `daily` | `weekly` | `monthly` | `yearly`;
 interface RepeatEnd {
     after_count: number;
     after_time: number;
@@ -16,13 +16,34 @@ interface ScheduleRepeatDetail {
     end: RepeatEnd;
     interval?: number;
 }
-declare type ScheduleRepeat = {
+interface ScheduleRepeat {
     type?: ScheduleRepeatType;
     daily: ScheduleRepeatDetail;
     weekly: ScheduleRepeatDetail;
     monthly: ScheduleRepeatDetail;
     yearly: ScheduleRepeatDetail;
-};
+}
+export interface SchedulesTimeViewListItem {
+    assessment_status: string;
+    class_id: string;
+    class_type: string;
+    due_at: number;
+    end_at: number;
+    id: string;
+    is_home_fun: boolean;
+    is_repeat: boolean;
+    lesson_plan_id: string;
+    start_at: number;
+    status: string;
+    title: string;
+}
+export declare enum ScheduleLiveTokenType {
+    LIVE = "live",
+    PREVIEW = "preview"
+}
+export interface GetScheduleByIdRequest {
+    scheduleId: string;
+}
 export interface GetScheduleByIdResponse {
     attachment: ForeignIdName;
     class: ForeignIdName;
@@ -57,8 +78,40 @@ export interface GetScheduleByIdResponse {
     title: string;
     version: number;
 }
-export interface GetScheduleByIdRequest {
+export declare function getScheduleById(request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions): Promise<GetScheduleByIdResponse>;
+export declare function useGetScheduleById(request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetScheduleByIdResponse>): import("react-query").UseQueryResult<GetScheduleByIdResponse, unknown>;
+interface GetLiveTokenByScheduleIdRequest {
     scheduleId: string;
+    liveTokenType: ScheduleLiveTokenType;
 }
-export declare function useGetScheduleById(request: GetScheduleByIdRequest, options?: RequestQueryOptions): import("react-query").UseQueryResult<unknown, unknown>;
+interface GetLiveTokenByScheduleIdResponse {
+    token: string;
+}
+export declare function getLiveTokenByScheduleId(request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions): Promise<GetLiveTokenByScheduleIdResponse>;
+export declare function useGetLiveTokenByScheduleId(request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetLiveTokenByScheduleIdResponse>): import("react-query").UseQueryResult<GetLiveTokenByScheduleIdResponse, unknown>;
+interface PostSchedulesTimeViewListRequest {
+    anytime: boolean;
+    class_ids: string[];
+    class_types: string[];
+    due_at_eq: number;
+    end_at_le: number;
+    order_by: string;
+    page: number;
+    page_size: number;
+    program_ids: string[];
+    school_ids: string[];
+    start_at_ge: number;
+    subject_ids: string[];
+    teacher_ids: string[];
+    time_at: number;
+    time_zone_offset: number;
+    view_type: string;
+    with_assessment_status: boolean;
+}
+interface PostSchedulesTimeViewListResponse {
+    data: SchedulesTimeViewListItem[];
+    total: number;
+}
+export declare function postSchedulesTimeViewList(request?: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions): Promise<PostSchedulesTimeViewListResponse>;
+export declare function usePostSchedulesTimeViewList(request?: PostSchedulesTimeViewListRequest, options?: RequestConfigQueryOptions<PostSchedulesTimeViewListResponse>): import("react-query").UseQueryResult<PostSchedulesTimeViewListResponse, unknown>;
 export {};

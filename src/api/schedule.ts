@@ -1,13 +1,10 @@
 import { client } from "../core";
 import {
     ForeignIdName,
-    RequestMutationOptions,
-    RequestQueryOptions,
+    RequestConfigOptions,
+    RequestConfigQueryOptions,
 } from "./shared";
-import {
-    useMutation,
-    useQuery,
-} from "react-query";
+import { useQuery } from "react-query";
 
 export enum ScheduleClassType {
     LIVE = `OnlineClass`, // live
@@ -17,7 +14,7 @@ export enum ScheduleClassType {
 }
 
 type RepeatEndType = `never` | `after_count` | `after_time`;
-type ScheduleRepeatType = "daily" | "weekly" | "monthly" | "yearly";
+type ScheduleRepeatType = `daily` | `weekly` | `monthly` | `yearly`;
 
 interface RepeatEnd {
     after_count: number;
@@ -28,12 +25,36 @@ interface ScheduleRepeatDetail {
     end: RepeatEnd;
     interval?: number;
 }
-type ScheduleRepeat = {
+interface ScheduleRepeat {
     type?: ScheduleRepeatType;
     daily: ScheduleRepeatDetail;
     weekly: ScheduleRepeatDetail;
     monthly: ScheduleRepeatDetail;
     yearly: ScheduleRepeatDetail;
+}
+
+export interface SchedulesTimeViewListItem {
+    assessment_status: string;
+    class_id: string;
+    class_type: string;
+    due_at: number;
+    end_at: number;
+    id: string;
+    is_home_fun: boolean;
+    is_repeat: boolean;
+    lesson_plan_id: string;
+    start_at: number;
+    status: string;
+    title: string;
+}
+
+export enum ScheduleLiveTokenType {
+    LIVE = `live`,
+    PREVIEW = `preview`
+}
+
+export interface GetScheduleByIdRequest {
+    scheduleId: string;
 }
 
 export interface GetScheduleByIdResponse {
@@ -68,22 +89,79 @@ export interface GetScheduleByIdResponse {
     version: number;
 }
 
-export interface GetScheduleByIdRequest {
-    scheduleId: string;
-}
-
-export function useGetScheduleById (request: GetScheduleByIdRequest, options?: RequestQueryOptions) {
+export async function getScheduleById (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions) {
     const { scheduleId } = request;
-    return useQuery(`getScheduleByID=${scheduleId}`, async () => {
-        const resp = await client.get<GetScheduleByIdResponse>(`products/${scheduleId}`, options?.config);
-        return resp.data;
-    }, options?.queryOptions);
+    const resp = await client.get<GetScheduleByIdResponse>(`/v1/schedules/${scheduleId}`, {
+        params: {
+            schedule_id: request.scheduleId,
+            live_token_type: request.liveTokenType,
+        },
+        ...options?.config,
+    });
+    return resp.data;
 }
 
-// export function usePostSchedulesFeedbacks (request: GetScheduleByIdRequest, options?: RequestMutationOptions) {
-//     const { scheduleId } = request;
-//     return useMutation(`getScheduleByID=${scheduleId}`, async () => {
-//         const resp = await client.get<GetScheduleByIdResponse>(`/v1/schedules_feedbacks/${scheduleId}`, options?.config);
-//         return resp.data;
-//     }, options?.mutationOptions);
-// }
+export function useGetScheduleById (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetScheduleByIdResponse>) {
+    const { scheduleId } = request;
+    return useQuery(`getScheduleByID=${scheduleId}`, () => getScheduleById(request, options), options?.queryOptions);
+}
+
+interface GetLiveTokenByScheduleIdRequest {
+    scheduleId: string;
+    liveTokenType: ScheduleLiveTokenType;
+}
+
+interface GetLiveTokenByScheduleIdResponse {
+    token: string;
+}
+
+export async function getLiveTokenByScheduleId (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions) {
+    const { scheduleId } = request;
+    const resp = await client.get<GetLiveTokenByScheduleIdResponse>(`/v1/schedules/${scheduleId}/live/token`, {
+        params: {
+            schedule_id: request.scheduleId,
+            live_token_type: request.liveTokenType,
+        },
+        ...options?.config,
+    });
+    return resp.data;
+}
+
+export function useGetLiveTokenByScheduleId (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetLiveTokenByScheduleIdResponse>) {
+    const { scheduleId, liveTokenType } = request;
+    return useQuery(`getScheduleByID=${scheduleId},${liveTokenType}`, () => getLiveTokenByScheduleId(request, options), options?.queryOptions);
+}
+
+interface PostSchedulesTimeViewListRequest {
+    anytime: boolean;
+    class_ids: string[];
+    class_types: string[];
+    due_at_eq: number;
+    end_at_le: number;
+    order_by: string;
+    page: number;
+    page_size: number;
+    program_ids: string[];
+    school_ids: string[];
+    start_at_ge: number;
+    subject_ids: string[];
+    teacher_ids: string[];
+    time_at: number;
+    time_zone_offset: number;
+    view_type: string;
+    with_assessment_status: boolean;
+}
+
+interface PostSchedulesTimeViewListResponse {
+    data: SchedulesTimeViewListItem[];
+    total: number;
+}
+
+export async function postSchedulesTimeViewList (request?: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions) {
+    const resp = await client.post<PostSchedulesTimeViewListResponse>(`/v1/schedules_time_view/list`, request, options?.config);
+    return resp.data;
+}
+
+export function usePostSchedulesTimeViewList (request?: PostSchedulesTimeViewListRequest, options?: RequestConfigQueryOptions<PostSchedulesTimeViewListResponse>) {
+    return useQuery(`getScheduleTimeViewList`, () => postSchedulesTimeViewList(request, options), options?.queryOptions);
+}

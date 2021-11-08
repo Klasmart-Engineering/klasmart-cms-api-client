@@ -18,14 +18,11 @@
   },
   "homepage": "https://bitbucket.org/calmisland/kidsloop-cms-api-client#readme",
   "devDependencies": {
-    "@babel/core": "7.15.8",
-    "@babel/preset-env": "7.15.8",
-    "@kidsloop/eslint-config": "bitbucket:calmisland/kidsloop-eslint-config#1.1.1",
-    "@testing-library/jest-dom": "5.14.1",
+    "@kidsloop/eslint-config": "bitbucket:calmisland/kidsloop-eslint-config#1.2.0",
+    "@testing-library/jest-dom": "5.15.0",
     "@testing-library/react-hooks": "7.0.2",
     "@types/jest": "27.0.2",
     "@types/testing-library__jest-dom": "5.14.1",
-    "babel-loader": "8.2.3",
     "eslint": "7.32.0",
     "jest": "27.3.1",
     "ts-jest": "27.0.7",
@@ -33,11 +30,13 @@
     "typescript": "4.4.4"
   },
   "peerDependencies": {
+    "axios": "0.24.0",
     "react": "^16.8.0 || ^17.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0"
+    "react-dom": "^16.8.0 || ^17.0.0",
+    "react-query": "3.32.1"
   },
   "dependencies": {
     "axios": "0.24.0",
-    "react-query": "3.29.0"
+    "react-query": "3.32.1"
   }
 }

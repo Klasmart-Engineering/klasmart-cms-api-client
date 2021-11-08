@@ -27,9 +27,10 @@ function updateHttpConfig(config) {
 exports.updateHttpConfig = updateHttpConfig;
 function CmsApiClientProvider(props) {
     const { children, config, queryOptions } = props, rest = __rest(props, ["children", "config", "queryOptions"]);
-    exports.queryClient = new react_query_1.QueryClient(queryOptions);
-    exports.client = axios_1.default.create(config);
-    console.log(`client.defaults.baseURL`, exports.client.defaults.baseURL);
+    if (!exports.queryClient)
+        exports.queryClient = new react_query_1.QueryClient(queryOptions);
+    if (!exports.client)
+        exports.client = axios_1.default.create(config);
     const updatedProps = Object.assign({ client: exports.queryClient }, rest);
     return (react_1.default.createElement(react_query_1.QueryClientProvider, Object.assign({}, updatedProps), children));
 }

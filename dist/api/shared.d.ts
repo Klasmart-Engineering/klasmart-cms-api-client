@@ -4,13 +4,12 @@ export declare type ForeignIdName = {
     id: string;
     name: string;
 };
-interface RequestBaseOptions {
+export interface RequestConfigOptions {
     config?: AxiosRequestConfig;
 }
-export interface RequestQueryOptions extends RequestBaseOptions {
-    queryOptions?: Omit<UseQueryOptions, 'queryKey' | 'queryFn'>;
+export interface RequestConfigQueryOptions<T> extends RequestConfigOptions {
+    queryOptions?: Omit<UseQueryOptions<T>, 'queryKey' | 'queryFn'>;
 }
-export interface RequestMutationOptions extends RequestBaseOptions {
+export interface RequestConfigMutationOptions extends RequestConfigOptions {
     mutationOptions?: Omit<UseMutationOptions, 'queryKey' | 'queryFn'>;
 }
-export {};

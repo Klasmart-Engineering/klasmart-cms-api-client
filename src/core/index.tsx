@@ -4,7 +4,8 @@ import axios,
     AxiosInstance,
     AxiosRequestConfig,
 } from "axios";
-import React from "react";
+import React,
+{ useEffect } from "react";
 import {
     DefaultOptions,
     MutationCache,
@@ -15,7 +16,6 @@ import {
 } from "react-query";
 
 export let client: AxiosInstance;
-
 export let queryClient: QueryClient;
 
 export function updateHttpConfig (config: Partial<AxiosDefaults>) {
@@ -46,9 +46,8 @@ export function CmsApiClientProvider (props: ProviderProps) {
         ...rest
     } = props;
 
-    queryClient = new QueryClient(queryOptions);
-    client = axios.create(config);
-    console.log(`client.defaults.baseURL`, client.defaults.baseURL);
+    if (!queryClient) queryClient = new QueryClient(queryOptions);
+    if (!client) client = axios.create(config);
 
     const updatedProps = {
         client: queryClient,
