@@ -133,23 +133,23 @@ export function useGetLiveTokenByScheduleId (request: GetLiveTokenByScheduleIdRe
 }
 
 interface PostSchedulesTimeViewListRequest {
-    anytime: boolean;
-    class_ids: string[];
-    class_types: string[];
-    due_at_eq: number;
-    end_at_le: number;
-    order_by: string;
-    page: number;
-    page_size: number;
-    program_ids: string[];
-    school_ids: string[];
-    start_at_ge: number;
-    subject_ids: string[];
-    teacher_ids: string[];
+    anytime?: boolean;
+    class_ids?: string[];
+    class_types?: string[];
+    due_at_eq?: number;
+    end_at_le?: number;
+    order_by?: string;
+    page?: number;
+    page_size?: number;
+    program_ids?: string[];
+    school_ids?: string[];
+    start_at_ge?: number;
+    subject_ids?: string[];
+    teacher_ids?: string[];
     time_at: number;
     time_zone_offset: number;
     view_type: string;
-    with_assessment_status: boolean;
+    with_assessment_status?: boolean;
 }
 
 interface PostSchedulesTimeViewListResponse {

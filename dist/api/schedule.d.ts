@@ -90,23 +90,23 @@ interface GetLiveTokenByScheduleIdResponse {
 export declare function getLiveTokenByScheduleId(request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions): Promise<GetLiveTokenByScheduleIdResponse>;
 export declare function useGetLiveTokenByScheduleId(request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetLiveTokenByScheduleIdResponse>): import("react-query").UseQueryResult<GetLiveTokenByScheduleIdResponse, unknown>;
 interface PostSchedulesTimeViewListRequest {
-    anytime: boolean;
-    class_ids: string[];
-    class_types: string[];
-    due_at_eq: number;
-    end_at_le: number;
-    order_by: string;
-    page: number;
-    page_size: number;
-    program_ids: string[];
-    school_ids: string[];
-    start_at_ge: number;
-    subject_ids: string[];
-    teacher_ids: string[];
+    anytime?: boolean;
+    class_ids?: string[];
+    class_types?: string[];
+    due_at_eq?: number;
+    end_at_le?: number;
+    order_by?: string;
+    page?: number;
+    page_size?: number;
+    program_ids?: string[];
+    school_ids?: string[];
+    start_at_ge?: number;
+    subject_ids?: string[];
+    teacher_ids?: string[];
     time_at: number;
     time_zone_offset: number;
     view_type: string;
-    with_assessment_status: boolean;
+    with_assessment_status?: boolean;
 }
 interface PostSchedulesTimeViewListResponse {
     data: SchedulesTimeViewListItem[];
