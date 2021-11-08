@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "KidsLoop CMS API client",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "postversion": "git push && git push --tags"
   },
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
