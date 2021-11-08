@@ -133,6 +133,7 @@ export function useGetLiveTokenByScheduleId (request: GetLiveTokenByScheduleIdRe
 }
 
 interface PostSchedulesTimeViewListRequest {
+    org_id: string;
     anytime?: boolean;
     class_ids?: string[];
     class_types?: string[];
@@ -157,11 +158,18 @@ interface PostSchedulesTimeViewListResponse {
     total: number;
 }
 
-export async function postSchedulesTimeViewList (request?: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions) {
-    const resp = await client.post<PostSchedulesTimeViewListResponse>(`/v1/schedules_time_view/list`, request, options?.config);
+export async function postSchedulesTimeViewList (request: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions) {
+    const { org_id, ...rest } = request;
+    const resp = await client.post<PostSchedulesTimeViewListResponse>(`/v1/schedules_time_view/list`, rest, {
+        params: {
+            org_id,
+            ...options?.config?.params,
+        },
+        ...options?.config,
+    });
     return resp.data;
 }
 
-export function usePostSchedulesTimeViewList (request?: PostSchedulesTimeViewListRequest, options?: RequestConfigQueryOptions<PostSchedulesTimeViewListResponse>) {
+export function usePostSchedulesTimeViewList (request: PostSchedulesTimeViewListRequest, options?: RequestConfigQueryOptions<PostSchedulesTimeViewListResponse>) {
     return useQuery(`getScheduleTimeViewList`, () => postSchedulesTimeViewList(request, options), options?.queryOptions);
 }

@@ -8,6 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.usePostSchedulesTimeViewList = exports.postSchedulesTimeViewList = exports.useGetLiveTokenByScheduleId = exports.getLiveTokenByScheduleId = exports.useGetScheduleById = exports.getScheduleById = exports.ScheduleLiveTokenType = exports.ScheduleClassType = void 0;
 const core_1 = require("../core");
@@ -57,8 +68,10 @@ function useGetLiveTokenByScheduleId(request, options) {
 }
 exports.useGetLiveTokenByScheduleId = useGetLiveTokenByScheduleId;
 function postSchedulesTimeViewList(request, options) {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
-        const resp = yield core_1.client.post(`/v1/schedules_time_view/list`, request, options === null || options === void 0 ? void 0 : options.config);
+        const { org_id } = request, rest = __rest(request, ["org_id"]);
+        const resp = yield core_1.client.post(`/v1/schedules_time_view/list`, rest, Object.assign({ params: Object.assign({ org_id }, (_a = options === null || options === void 0 ? void 0 : options.config) === null || _a === void 0 ? void 0 : _a.params) }, options === null || options === void 0 ? void 0 : options.config));
         return resp.data;
     });
 }

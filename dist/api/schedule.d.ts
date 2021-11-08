@@ -90,6 +90,7 @@ interface GetLiveTokenByScheduleIdResponse {
 export declare function getLiveTokenByScheduleId(request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions): Promise<GetLiveTokenByScheduleIdResponse>;
 export declare function useGetLiveTokenByScheduleId(request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetLiveTokenByScheduleIdResponse>): import("react-query").UseQueryResult<GetLiveTokenByScheduleIdResponse, unknown>;
 interface PostSchedulesTimeViewListRequest {
+    org_id: string;
     anytime?: boolean;
     class_ids?: string[];
     class_types?: string[];
@@ -112,6 +113,6 @@ interface PostSchedulesTimeViewListResponse {
     data: SchedulesTimeViewListItem[];
     total: number;
 }
-export declare function postSchedulesTimeViewList(request?: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions): Promise<PostSchedulesTimeViewListResponse>;
-export declare function usePostSchedulesTimeViewList(request?: PostSchedulesTimeViewListRequest, options?: RequestConfigQueryOptions<PostSchedulesTimeViewListResponse>): import("react-query").UseQueryResult<PostSchedulesTimeViewListResponse, unknown>;
+export declare function postSchedulesTimeViewList(request: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions): Promise<PostSchedulesTimeViewListResponse>;
+export declare function usePostSchedulesTimeViewList(request: PostSchedulesTimeViewListRequest, options?: RequestConfigQueryOptions<PostSchedulesTimeViewListResponse>): import("react-query").UseQueryResult<PostSchedulesTimeViewListResponse, unknown>;
 export {};
