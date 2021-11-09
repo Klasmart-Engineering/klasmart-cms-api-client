@@ -55,7 +55,7 @@ export enum ScheduleLiveTokenType {
 
 interface GetScheduleByIdRequest {
     org_id: string;
-    scheduleId: string;
+    schedule_id: string;
 }
 
 export interface GetScheduleByIdResponse {
@@ -91,10 +91,10 @@ export interface GetScheduleByIdResponse {
 }
 
 export async function getScheduleById (request: GetScheduleByIdRequest, options?: RequestConfigOptions) {
-    const { scheduleId, org_id } = request;
-    const resp = await client.get<GetScheduleByIdResponse>(`/v1/schedules/${scheduleId}`, {
+    const { schedule_id, ...rest } = request;
+    const resp = await client.get<GetScheduleByIdResponse>(`/v1/schedules/${schedule_id}`, {
         params: {
-            org_id,
+            ...rest,
             ...options?.config?.params,
         },
         ...options?.config,
@@ -107,8 +107,8 @@ export function useGetScheduleById (request: GetScheduleByIdRequest, options?: R
 }
 
 interface GetLiveTokenByScheduleIdRequest {
-    scheduleId: string;
-    liveTokenType: ScheduleLiveTokenType;
+    schedule_id: string;
+    live_token_type: ScheduleLiveTokenType;
 }
 
 interface GetLiveTokenByScheduleIdResponse {
@@ -116,11 +116,11 @@ interface GetLiveTokenByScheduleIdResponse {
 }
 
 export async function getLiveTokenByScheduleId (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions) {
-    const { scheduleId } = request;
-    const resp = await client.get<GetLiveTokenByScheduleIdResponse>(`/v1/schedules/${scheduleId}/live/token`, {
+    const { schedule_id, ...rest } = request;
+    const resp = await client.get<GetLiveTokenByScheduleIdResponse>(`/v1/schedules/${schedule_id}/live/token`, {
         params: {
-            schedule_id: request.scheduleId,
-            live_token_type: request.liveTokenType,
+            ...rest,
+            ...options?.config?.params,
         },
         ...options?.config,
     });

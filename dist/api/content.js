@@ -14,8 +14,8 @@ const core_1 = require("../core");
 const react_query_1 = require("react-query");
 function getContentResourcePathById(request, options) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { resourceId } = request;
-        const resp = yield core_1.client.get(`/v1/contents_resources/${resourceId}`, Object.assign({ responseType: `blob` }, options === null || options === void 0 ? void 0 : options.config));
+        const { resource_id } = request;
+        const resp = yield core_1.client.get(`/v1/contents_resources/${resource_id}`, Object.assign({ responseType: `blob` }, options === null || options === void 0 ? void 0 : options.config));
         return resp.data;
     });
 }

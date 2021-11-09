@@ -6,12 +6,12 @@ import {
 import { useMutation } from "react-query";
 
 interface GetContentResourcePathRequest {
-    resourceId: string;
+    resource_id: string;
 }
 
 export async function getContentResourcePathById (request: GetContentResourcePathRequest, options?: RequestConfigOptions) {
-    const { resourceId } = request;
-    const resp = await client.get<Blob>(`/v1/contents_resources/${resourceId}`, {
+    const { resource_id } = request;
+    const resp = await client.get<Blob>(`/v1/contents_resources/${resource_id}`, {
         responseType: `blob`,
         ...options?.config,
     });

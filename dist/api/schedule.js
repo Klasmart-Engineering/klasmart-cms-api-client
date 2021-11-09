@@ -38,8 +38,8 @@ var ScheduleLiveTokenType;
 function getScheduleById(request, options) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
-        const { scheduleId, org_id } = request;
-        const resp = yield core_1.client.get(`/v1/schedules/${scheduleId}`, Object.assign({ params: Object.assign({ org_id }, (_a = options === null || options === void 0 ? void 0 : options.config) === null || _a === void 0 ? void 0 : _a.params) }, options === null || options === void 0 ? void 0 : options.config));
+        const { schedule_id } = request, rest = __rest(request, ["schedule_id"]);
+        const resp = yield core_1.client.get(`/v1/schedules/${schedule_id}`, Object.assign({ params: Object.assign(Object.assign({}, rest), (_a = options === null || options === void 0 ? void 0 : options.config) === null || _a === void 0 ? void 0 : _a.params) }, options === null || options === void 0 ? void 0 : options.config));
         return resp.data;
     });
 }
@@ -49,12 +49,10 @@ function useGetScheduleById(request, options) {
 }
 exports.useGetScheduleById = useGetScheduleById;
 function getLiveTokenByScheduleId(request, options) {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
-        const { scheduleId } = request;
-        const resp = yield core_1.client.get(`/v1/schedules/${scheduleId}/live/token`, Object.assign({ params: {
-                schedule_id: request.scheduleId,
-                live_token_type: request.liveTokenType,
-            } }, options === null || options === void 0 ? void 0 : options.config));
+        const { schedule_id } = request, rest = __rest(request, ["schedule_id"]);
+        const resp = yield core_1.client.get(`/v1/schedules/${schedule_id}/live/token`, Object.assign({ params: Object.assign(Object.assign({}, rest), (_a = options === null || options === void 0 ? void 0 : options.config) === null || _a === void 0 ? void 0 : _a.params) }, options === null || options === void 0 ? void 0 : options.config));
         return resp.data;
     });
 }

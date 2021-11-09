@@ -43,7 +43,7 @@ export declare enum ScheduleLiveTokenType {
 }
 interface GetScheduleByIdRequest {
     org_id: string;
-    scheduleId: string;
+    schedule_id: string;
 }
 export interface GetScheduleByIdResponse {
     attachment: ForeignIdName;
@@ -82,8 +82,8 @@ export interface GetScheduleByIdResponse {
 export declare function getScheduleById(request: GetScheduleByIdRequest, options?: RequestConfigOptions): Promise<GetScheduleByIdResponse>;
 export declare function useGetScheduleById(request: GetScheduleByIdRequest, options?: RequestConfigQueryOptions<GetScheduleByIdResponse>): import("react-query").UseQueryResult<GetScheduleByIdResponse, unknown>;
 interface GetLiveTokenByScheduleIdRequest {
-    scheduleId: string;
-    liveTokenType: ScheduleLiveTokenType;
+    schedule_id: string;
+    live_token_type: ScheduleLiveTokenType;
 }
 interface GetLiveTokenByScheduleIdResponse {
     token: string;
