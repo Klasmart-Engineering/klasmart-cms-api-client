@@ -21,7 +21,6 @@ function getContentResourcePathById(request, options) {
 }
 exports.getContentResourcePathById = getContentResourcePathById;
 function useGetContentResourcePathById(request, options) {
-    const { resourceId } = request;
-    return (0, react_query_1.useMutation)(`getDownloadPath=${resourceId}`, () => getContentResourcePathById(request, options), options === null || options === void 0 ? void 0 : options.queryOptions);
+    return (0, react_query_1.useMutation)(`getDownloadPath=${JSON.stringify(request)}`, () => getContentResourcePathById(request, options), options === null || options === void 0 ? void 0 : options.queryOptions);
 }
 exports.useGetContentResourcePathById = useGetContentResourcePathById;

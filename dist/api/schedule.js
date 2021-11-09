@@ -47,8 +47,7 @@ function getScheduleById(request, options) {
 }
 exports.getScheduleById = getScheduleById;
 function useGetScheduleById(request, options) {
-    const { scheduleId } = request;
-    return (0, react_query_1.useQuery)(`getScheduleByID=${scheduleId}`, () => getScheduleById(request, options), options === null || options === void 0 ? void 0 : options.queryOptions);
+    return (0, react_query_1.useQuery)(`getScheduleByID=${JSON.stringify(request)}`, () => getScheduleById(request, options), options === null || options === void 0 ? void 0 : options.queryOptions);
 }
 exports.useGetScheduleById = useGetScheduleById;
 function getLiveTokenByScheduleId(request, options) {
@@ -63,8 +62,7 @@ function getLiveTokenByScheduleId(request, options) {
 }
 exports.getLiveTokenByScheduleId = getLiveTokenByScheduleId;
 function useGetLiveTokenByScheduleId(request, options) {
-    const { scheduleId, liveTokenType } = request;
-    return (0, react_query_1.useQuery)(`getScheduleByID=${scheduleId},${liveTokenType}`, () => getLiveTokenByScheduleId(request, options), options === null || options === void 0 ? void 0 : options.queryOptions);
+    return (0, react_query_1.useQuery)(`getScheduleByID=${JSON.stringify(request)}`, () => getLiveTokenByScheduleId(request, options), options === null || options === void 0 ? void 0 : options.queryOptions);
 }
 exports.useGetLiveTokenByScheduleId = useGetLiveTokenByScheduleId;
 function postSchedulesTimeViewList(request, options) {
@@ -77,6 +75,6 @@ function postSchedulesTimeViewList(request, options) {
 }
 exports.postSchedulesTimeViewList = postSchedulesTimeViewList;
 function usePostSchedulesTimeViewList(request, options) {
-    return (0, react_query_1.useQuery)(`getScheduleTimeViewList`, () => postSchedulesTimeViewList(request, options), options === null || options === void 0 ? void 0 : options.queryOptions);
+    return (0, react_query_1.useQuery)(`getScheduleTimeViewList=${JSON.stringify(request)}`, () => postSchedulesTimeViewList(request, options), options === null || options === void 0 ? void 0 : options.queryOptions);
 }
 exports.usePostSchedulesTimeViewList = usePostSchedulesTimeViewList;

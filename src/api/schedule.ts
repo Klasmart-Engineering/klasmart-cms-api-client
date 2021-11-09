@@ -102,8 +102,7 @@ export async function getScheduleById (request: GetLiveTokenByScheduleIdRequest,
 }
 
 export function useGetScheduleById (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetScheduleByIdResponse>) {
-    const { scheduleId } = request;
-    return useQuery(`getScheduleByID=${scheduleId}`, () => getScheduleById(request, options), options?.queryOptions);
+    return useQuery(`getScheduleByID=${JSON.stringify(request)}`, () => getScheduleById(request, options), options?.queryOptions);
 }
 
 interface GetLiveTokenByScheduleIdRequest {
@@ -128,8 +127,7 @@ export async function getLiveTokenByScheduleId (request: GetLiveTokenByScheduleI
 }
 
 export function useGetLiveTokenByScheduleId (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetLiveTokenByScheduleIdResponse>) {
-    const { scheduleId, liveTokenType } = request;
-    return useQuery(`getScheduleByID=${scheduleId},${liveTokenType}`, () => getLiveTokenByScheduleId(request, options), options?.queryOptions);
+    return useQuery(`getScheduleByID=${JSON.stringify(request)}`, () => getLiveTokenByScheduleId(request, options), options?.queryOptions);
 }
 
 interface PostSchedulesTimeViewListRequest {
@@ -171,5 +169,5 @@ export async function postSchedulesTimeViewList (request: PostSchedulesTimeViewL
 }
 
 export function usePostSchedulesTimeViewList (request: PostSchedulesTimeViewListRequest, options?: RequestConfigQueryOptions<PostSchedulesTimeViewListResponse>) {
-    return useQuery(`getScheduleTimeViewList`, () => postSchedulesTimeViewList(request, options), options?.queryOptions);
+    return useQuery(`getScheduleTimeViewList=${JSON.stringify(request)}`, () => postSchedulesTimeViewList(request, options), options?.queryOptions);
 }
