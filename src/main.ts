@@ -5,7 +5,6 @@ export {
 export {
     getLiveTokenByScheduleId,
     getScheduleById,
-    GetScheduleByIdRequest,
     GetScheduleByIdResponse,
     postSchedulesTimeViewList,
     ScheduleClassType,

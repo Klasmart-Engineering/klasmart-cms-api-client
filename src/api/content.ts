@@ -19,5 +19,5 @@ export async function getContentResourcePathById (request: GetContentResourcePat
 }
 
 export function useGetContentResourcePathById (request: GetContentResourcePathRequest, options?: RequestConfigQueryOptions<Blob>) {
-    return useMutation(`getDownloadPath=${JSON.stringify(request)}`, () => getContentResourcePathById(request, options), options?.queryOptions);
+    return useMutation([ `getDownloadPath`, request ], () => getContentResourcePathById(request, options), options?.queryOptions);
 }

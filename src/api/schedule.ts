@@ -53,7 +53,8 @@ export enum ScheduleLiveTokenType {
     PREVIEW = `preview`
 }
 
-export interface GetScheduleByIdRequest {
+interface GetScheduleByIdRequest {
+    org_id: string;
     scheduleId: string;
 }
 
@@ -89,20 +90,20 @@ export interface GetScheduleByIdResponse {
     version: number;
 }
 
-export async function getScheduleById (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions) {
-    const { scheduleId } = request;
+export async function getScheduleById (request: GetScheduleByIdRequest, options?: RequestConfigOptions) {
+    const { scheduleId, org_id } = request;
     const resp = await client.get<GetScheduleByIdResponse>(`/v1/schedules/${scheduleId}`, {
         params: {
-            schedule_id: request.scheduleId,
-            live_token_type: request.liveTokenType,
+            org_id,
+            ...options?.config?.params,
         },
         ...options?.config,
     });
     return resp.data;
 }
 
-export function useGetScheduleById (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetScheduleByIdResponse>) {
-    return useQuery(`getScheduleByID=${JSON.stringify(request)}`, () => getScheduleById(request, options), options?.queryOptions);
+export function useGetScheduleById (request: GetScheduleByIdRequest, options?: RequestConfigQueryOptions<GetScheduleByIdResponse>) {
+    return useQuery([ `getScheduleByID`, request ], () => getScheduleById(request, options), options?.queryOptions);
 }
 
 interface GetLiveTokenByScheduleIdRequest {
@@ -127,7 +128,7 @@ export async function getLiveTokenByScheduleId (request: GetLiveTokenByScheduleI
 }
 
 export function useGetLiveTokenByScheduleId (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetLiveTokenByScheduleIdResponse>) {
-    return useQuery(`getScheduleByID=${JSON.stringify(request)}`, () => getLiveTokenByScheduleId(request, options), options?.queryOptions);
+    return useQuery([ `getScheduleByID`, request ], () => getLiveTokenByScheduleId(request, options), options?.queryOptions);
 }
 
 interface PostSchedulesTimeViewListRequest {
@@ -169,5 +170,5 @@ export async function postSchedulesTimeViewList (request: PostSchedulesTimeViewL
 }
 
 export function usePostSchedulesTimeViewList (request: PostSchedulesTimeViewListRequest, options?: RequestConfigQueryOptions<PostSchedulesTimeViewListResponse>) {
-    return useQuery(`getScheduleTimeViewList=${JSON.stringify(request)}`, () => postSchedulesTimeViewList(request, options), options?.queryOptions);
+    return useQuery([ `getScheduleTimeViewList`, request ], () => postSchedulesTimeViewList(request, options), options?.queryOptions);
 }

@@ -41,7 +41,8 @@ export declare enum ScheduleLiveTokenType {
     LIVE = "live",
     PREVIEW = "preview"
 }
-export interface GetScheduleByIdRequest {
+interface GetScheduleByIdRequest {
+    org_id: string;
     scheduleId: string;
 }
 export interface GetScheduleByIdResponse {
@@ -78,8 +79,8 @@ export interface GetScheduleByIdResponse {
     title: string;
     version: number;
 }
-export declare function getScheduleById(request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions): Promise<GetScheduleByIdResponse>;
-export declare function useGetScheduleById(request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetScheduleByIdResponse>): import("react-query").UseQueryResult<GetScheduleByIdResponse, unknown>;
+export declare function getScheduleById(request: GetScheduleByIdRequest, options?: RequestConfigOptions): Promise<GetScheduleByIdResponse>;
+export declare function useGetScheduleById(request: GetScheduleByIdRequest, options?: RequestConfigQueryOptions<GetScheduleByIdResponse>): import("react-query").UseQueryResult<GetScheduleByIdResponse, unknown>;
 interface GetLiveTokenByScheduleIdRequest {
     scheduleId: string;
     liveTokenType: ScheduleLiveTokenType;

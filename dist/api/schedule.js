@@ -36,18 +36,16 @@ var ScheduleLiveTokenType;
     ScheduleLiveTokenType["PREVIEW"] = "preview";
 })(ScheduleLiveTokenType = exports.ScheduleLiveTokenType || (exports.ScheduleLiveTokenType = {}));
 function getScheduleById(request, options) {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
-        const { scheduleId } = request;
-        const resp = yield core_1.client.get(`/v1/schedules/${scheduleId}`, Object.assign({ params: {
-                schedule_id: request.scheduleId,
-                live_token_type: request.liveTokenType,
-            } }, options === null || options === void 0 ? void 0 : options.config));
+        const { scheduleId, org_id } = request;
+        const resp = yield core_1.client.get(`/v1/schedules/${scheduleId}`, Object.assign({ params: Object.assign({ org_id }, (_a = options === null || options === void 0 ? void 0 : options.config) === null || _a === void 0 ? void 0 : _a.params) }, options === null || options === void 0 ? void 0 : options.config));
         return resp.data;
     });
 }
 exports.getScheduleById = getScheduleById;
 function useGetScheduleById(request, options) {
-    return (0, react_query_1.useQuery)(`getScheduleByID=${JSON.stringify(request)}`, () => getScheduleById(request, options), options === null || options === void 0 ? void 0 : options.queryOptions);
+    return (0, react_query_1.useQuery)([`getScheduleByID`, request], () => getScheduleById(request, options), options === null || options === void 0 ? void 0 : options.queryOptions);
 }
 exports.useGetScheduleById = useGetScheduleById;
 function getLiveTokenByScheduleId(request, options) {
@@ -62,7 +60,7 @@ function getLiveTokenByScheduleId(request, options) {
 }
 exports.getLiveTokenByScheduleId = getLiveTokenByScheduleId;
 function useGetLiveTokenByScheduleId(request, options) {
-    return (0, react_query_1.useQuery)(`getScheduleByID=${JSON.stringify(request)}`, () => getLiveTokenByScheduleId(request, options), options === null || options === void 0 ? void 0 : options.queryOptions);
+    return (0, react_query_1.useQuery)([`getScheduleByID`, request], () => getLiveTokenByScheduleId(request, options), options === null || options === void 0 ? void 0 : options.queryOptions);
 }
 exports.useGetLiveTokenByScheduleId = useGetLiveTokenByScheduleId;
 function postSchedulesTimeViewList(request, options) {
@@ -75,6 +73,6 @@ function postSchedulesTimeViewList(request, options) {
 }
 exports.postSchedulesTimeViewList = postSchedulesTimeViewList;
 function usePostSchedulesTimeViewList(request, options) {
-    return (0, react_query_1.useQuery)(`getScheduleTimeViewList=${JSON.stringify(request)}`, () => postSchedulesTimeViewList(request, options), options === null || options === void 0 ? void 0 : options.queryOptions);
+    return (0, react_query_1.useQuery)([`getScheduleTimeViewList`, request], () => postSchedulesTimeViewList(request, options), options === null || options === void 0 ? void 0 : options.queryOptions);
 }
 exports.usePostSchedulesTimeViewList = usePostSchedulesTimeViewList;
