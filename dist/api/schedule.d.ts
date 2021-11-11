@@ -1,4 +1,4 @@
-import { ForeignIdName, RequestConfigOptions, RequestConfigQueryOptions } from "./shared";
+import { BaseRequest, ForeignIdName, RequestConfigOptions, RequestConfigQueryOptions } from "./shared";
 export declare enum ScheduleClassType {
     LIVE = "OnlineClass",
     CLASSES = "OfflineClass",
@@ -41,8 +41,7 @@ export declare enum ScheduleLiveTokenType {
     LIVE = "live",
     PREVIEW = "preview"
 }
-interface GetScheduleByIdRequest {
-    org_id: string;
+interface GetScheduleByIdRequest extends BaseRequest {
     schedule_id: string;
 }
 export interface GetScheduleByIdResponse {
@@ -81,7 +80,7 @@ export interface GetScheduleByIdResponse {
 }
 export declare function getScheduleById(request: GetScheduleByIdRequest, options?: RequestConfigOptions): Promise<GetScheduleByIdResponse>;
 export declare function useGetScheduleById(request: GetScheduleByIdRequest, options?: RequestConfigQueryOptions<GetScheduleByIdResponse>): import("react-query").UseQueryResult<GetScheduleByIdResponse, unknown>;
-interface GetLiveTokenByScheduleIdRequest {
+interface GetLiveTokenByScheduleIdRequest extends BaseRequest {
     schedule_id: string;
     live_token_type: ScheduleLiveTokenType;
 }
@@ -90,8 +89,7 @@ interface GetLiveTokenByScheduleIdResponse {
 }
 export declare function getLiveTokenByScheduleId(request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions): Promise<GetLiveTokenByScheduleIdResponse>;
 export declare function useGetLiveTokenByScheduleId(request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetLiveTokenByScheduleIdResponse>): import("react-query").UseQueryResult<GetLiveTokenByScheduleIdResponse, unknown>;
-interface PostSchedulesTimeViewListRequest {
-    org_id: string;
+interface PostSchedulesTimeViewListRequest extends BaseRequest {
     anytime?: boolean;
     class_ids?: string[];
     class_types?: string[];

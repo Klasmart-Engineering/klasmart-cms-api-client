@@ -13,3 +13,6 @@ export interface RequestConfigQueryOptions<T> extends RequestConfigOptions {
 export interface RequestConfigMutationOptions extends RequestConfigOptions {
     mutationOptions?: Omit<UseMutationOptions, 'queryKey' | 'queryFn'>;
 }
+export interface BaseRequest {
+    org_id: string;
+}

@@ -1,5 +1,6 @@
 import { client } from "../core";
 import {
+    BaseRequest,
     ForeignIdName,
     RequestConfigOptions,
     RequestConfigQueryOptions,
@@ -53,8 +54,7 @@ export enum ScheduleLiveTokenType {
     PREVIEW = `preview`
 }
 
-interface GetScheduleByIdRequest {
-    org_id: string;
+interface GetScheduleByIdRequest extends BaseRequest {
     schedule_id: string;
 }
 
@@ -106,7 +106,7 @@ export function useGetScheduleById (request: GetScheduleByIdRequest, options?: R
     return useQuery([ `getScheduleByID`, request ], () => getScheduleById(request, options), options?.queryOptions);
 }
 
-interface GetLiveTokenByScheduleIdRequest {
+interface GetLiveTokenByScheduleIdRequest extends BaseRequest {
     schedule_id: string;
     live_token_type: ScheduleLiveTokenType;
 }
@@ -131,8 +131,7 @@ export function useGetLiveTokenByScheduleId (request: GetLiveTokenByScheduleIdRe
     return useQuery([ `getScheduleByID`, request ], () => getLiveTokenByScheduleId(request, options), options?.queryOptions);
 }
 
-interface PostSchedulesTimeViewListRequest {
-    org_id: string;
+interface PostSchedulesTimeViewListRequest extends BaseRequest {
     anytime?: boolean;
     class_ids?: string[];
     class_types?: string[];
