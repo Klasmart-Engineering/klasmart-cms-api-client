@@ -3,6 +3,7 @@ import axios,
     AxiosDefaults,
     AxiosInstance,
     AxiosRequestConfig,
+    AxiosResponse,
 } from "axios";
 import React from "react";
 import {
@@ -30,6 +31,10 @@ export function updateHttpConfig (config: Partial<AxiosDefaults>) {
 interface ProviderProps extends Partial<QueryClientProviderProps> {
     children: React.ReactNode;
     config: AxiosRequestConfig;
+    interceptors?: {
+        onFulfilled?: ((value: AxiosResponse<any, any>) => AxiosResponse<any, any> | Promise<AxiosResponse<any, any>>) | undefined;
+        onRejected?: ((error: any) => any) | undefined;
+    }[];
     queryOptions?: {
         queryCache?: QueryCache;
         mutationCache?: MutationCache;
@@ -42,11 +47,15 @@ export function CmsApiClientProvider (props: ProviderProps) {
         children,
         config,
         queryOptions,
+        interceptors,
         ...rest
     } = props;
 
     if (!queryClient) queryClient = new QueryClient(queryOptions);
     if (!client) client = axios.create(config);
+    interceptors?.forEach((interceptor) => {
+        client.interceptors.response.use(interceptor.onFulfilled, interceptor.onRejected);
+    });
 
     const updatedProps = {
         client: queryClient,
