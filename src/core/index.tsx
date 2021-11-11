@@ -1,6 +1,7 @@
 import axios,
 {
     AxiosDefaults,
+    AxiosError,
     AxiosInstance,
     AxiosRequestConfig,
     AxiosResponse,
@@ -33,7 +34,7 @@ interface ProviderProps extends Partial<QueryClientProviderProps> {
     config: AxiosRequestConfig;
     interceptors?: {
         onFulfilled?: ((value: AxiosResponse<any, any>) => AxiosResponse<any, any> | Promise<AxiosResponse<any, any>>) | undefined;
-        onRejected?: ((error: any) => any) | undefined;
+        onRejected?: ((error: AxiosError) => AxiosError) | undefined;
     }[];
     queryOptions?: {
         queryCache?: QueryCache;

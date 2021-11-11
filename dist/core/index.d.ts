@@ -1,4 +1,4 @@
-import { AxiosDefaults, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { AxiosDefaults, AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import React from "react";
 import { DefaultOptions, MutationCache, QueryCache, QueryClient, QueryClientProviderProps } from "react-query";
 export declare let client: AxiosInstance;
@@ -9,7 +9,7 @@ interface ProviderProps extends Partial<QueryClientProviderProps> {
     config: AxiosRequestConfig;
     interceptors?: {
         onFulfilled?: ((value: AxiosResponse<any, any>) => AxiosResponse<any, any> | Promise<AxiosResponse<any, any>>) | undefined;
-        onRejected?: ((error: any) => any) | undefined;
+        onRejected?: ((error: AxiosError) => AxiosError) | undefined;
     }[];
     queryOptions?: {
         queryCache?: QueryCache;
