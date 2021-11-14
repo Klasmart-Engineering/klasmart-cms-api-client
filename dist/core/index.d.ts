@@ -9,7 +9,7 @@ interface ProviderProps extends Partial<QueryClientProviderProps> {
     config: AxiosRequestConfig;
     interceptors?: {
         onFulfilled?: ((value: AxiosResponse<any, any>) => AxiosResponse<any, any> | Promise<AxiosResponse<any, any>>) | undefined;
-        onRejected?: ((error: AxiosError) => AxiosError | Promise<AxiosError>) | undefined;
+        onRejected?: ((error: AxiosError) => any) | undefined;
     }[];
     queryOptions?: {
         queryCache?: QueryCache;

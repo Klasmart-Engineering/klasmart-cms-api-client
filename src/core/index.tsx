@@ -34,7 +34,7 @@ interface ProviderProps extends Partial<QueryClientProviderProps> {
     config: AxiosRequestConfig;
     interceptors?: {
         onFulfilled?: ((value: AxiosResponse<any, any>) => AxiosResponse<any, any> | Promise<AxiosResponse<any, any>>) | undefined;
-        onRejected?: ((error: AxiosError) => AxiosError | Promise<AxiosError>) | undefined;
+        onRejected?: ((error: AxiosError) => any) | undefined;
     }[];
     queryOptions?: {
         queryCache?: QueryCache;
@@ -54,9 +54,9 @@ export function CmsApiClientProvider (props: ProviderProps) {
 
     if (!queryClient) queryClient = new QueryClient(queryOptions);
     if (!client) client = axios.create(config);
-    interceptors?.forEach((interceptor) => {
+    for (const interceptor of interceptors ?? []) {
         client.interceptors.response.use(interceptor.onFulfilled, interceptor.onRejected);
-    });
+    }
 
     const updatedProps = {
         client: queryClient,

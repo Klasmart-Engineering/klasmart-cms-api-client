@@ -31,9 +31,9 @@ function CmsApiClientProvider(props) {
         exports.queryClient = new react_query_1.QueryClient(queryOptions);
     if (!exports.client)
         exports.client = axios_1.default.create(config);
-    interceptors === null || interceptors === void 0 ? void 0 : interceptors.forEach((interceptor) => {
+    for (const interceptor of interceptors !== null && interceptors !== void 0 ? interceptors : []) {
         exports.client.interceptors.response.use(interceptor.onFulfilled, interceptor.onRejected);
-    });
+    }
     const updatedProps = Object.assign({ client: exports.queryClient }, rest);
     return (react_1.default.createElement(react_query_1.QueryClientProvider, Object.assign({}, updatedProps), children));
 }
