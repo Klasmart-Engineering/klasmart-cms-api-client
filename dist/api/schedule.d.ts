@@ -5,8 +5,18 @@ export declare enum ScheduleClassType {
     STUDY = "Homework",
     TASK = "Task"
 }
+export declare enum AssessmentStatus {
+    COMPLETE = "complete",
+    IN_PROGRESS = "in_progress"
+}
+export declare enum ScheduleStatus {
+    NOT_START = "NotStart",
+    STARTED = "Started",
+    CLOSED = "Closed"
+}
 declare type RepeatEndType = `never` | `after_count` | `after_time`;
 declare type ScheduleRepeatType = `daily` | `weekly` | `monthly` | `yearly`;
+declare type ScheduleViewType = `day` | `work_week` | `week` | `month` | `year` | `full_view`;
 interface RepeatEnd {
     after_count: number;
     after_time: number;
@@ -24,9 +34,9 @@ interface ScheduleRepeat {
     yearly: ScheduleRepeatDetail;
 }
 export interface SchedulesTimeViewListItem {
-    assessment_status: string;
+    assessment_status: AssessmentStatus;
     class_id: string;
-    class_type: string;
+    class_type: ScheduleClassType;
     due_at: number;
     end_at: number;
     id: string;
@@ -34,7 +44,7 @@ export interface SchedulesTimeViewListItem {
     is_repeat: boolean;
     lesson_plan_id: string;
     start_at: number;
-    status: string;
+    status: ScheduleStatus;
     title: string;
 }
 export declare enum ScheduleLiveTokenType {
@@ -92,7 +102,7 @@ export declare function useGetLiveTokenByScheduleId(request: GetLiveTokenBySched
 interface PostSchedulesTimeViewListRequest extends BaseRequest {
     anytime?: boolean;
     class_ids?: string[];
-    class_types?: string[];
+    class_types?: ScheduleClassType[];
     due_at_eq?: number;
     end_at_le?: number;
     order_by?: string;
@@ -105,7 +115,7 @@ interface PostSchedulesTimeViewListRequest extends BaseRequest {
     teacher_ids?: string[];
     time_at: number;
     time_zone_offset: number;
-    view_type: string;
+    view_type: ScheduleViewType;
     with_assessment_status?: boolean;
 }
 interface PostSchedulesTimeViewListResponse {
