@@ -7,27 +7,14 @@ import {
 } from "./shared";
 import { useQuery } from "react-query";
 
-export enum ScheduleClassType {
-    LIVE = `OnlineClass`, // live
-    CLASSES = `OfflineClass`, // classes
-    STUDY = `Homework`, // study
-    TASK = `Task` // task
-}
-
-export enum AssessmentStatus {
-    COMPLETE = `complete`,
-    IN_PROGRESS = `in_progress`,
-}
-
-export enum ScheduleStatus {
-    NOT_START = `NotStart`,
-    STARTED = `Started`,
-    CLOSED = `Closed`,
-}
-
-type RepeatEndType = `never` | `after_count` | `after_time`;
-type ScheduleRepeatType = `daily` | `weekly` | `monthly` | `yearly`;
-type ScheduleViewType = `day` | `work_week` | `week` | `month` | `year` | `full_view`
+export type ScheduleClassType = `OnlineClass` | `OfflineClass` | `Homework` | `Task`;
+export type AssessmentStatus = `complete` | `in_progress`;
+export type ScheduleStatus = `NotStart` | `Started` | `Closed`;
+export type RepeatEndType = `never` | `after_count` | `after_time`;
+export type ScheduleRepeatType = `daily` | `weekly` | `monthly` | `yearly`;
+export type ScheduleViewType = `day` | `work_week` | `week` | `month` | `year` | `full_view`
+export type ScheduleLiveTokenType = `live` | `preview`;
+export type TimeBoundary = `intersect` | `union`;
 
 interface RepeatEnd {
     after_count: number;
@@ -59,11 +46,6 @@ export interface SchedulesTimeViewListItem {
     start_at: number;
     status: ScheduleStatus;
     title: string;
-}
-
-export enum ScheduleLiveTokenType {
-    LIVE = `live`,
-    PREVIEW = `preview`
 }
 
 interface GetScheduleByIdRequest extends BaseRequest {
@@ -150,14 +132,15 @@ interface PostSchedulesTimeViewListRequest extends BaseRequest {
     due_at_eq?: number;
     end_at_le?: number;
     order_by?: string;
-    page?: number;
     page_size?: number;
+    page?: number;
     program_ids?: string[];
     school_ids?: string[];
     start_at_ge?: number;
     subject_ids?: string[];
     teacher_ids?: string[];
     time_at: number;
+    time_boundary?: TimeBoundary;
     time_zone_offset: number;
     view_type: ScheduleViewType;
     with_assessment_status?: boolean;

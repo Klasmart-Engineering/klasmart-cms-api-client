@@ -1,22 +1,12 @@
 import { BaseRequest, ForeignIdName, RequestConfigOptions, RequestConfigQueryOptions } from "./shared";
-export declare enum ScheduleClassType {
-    LIVE = "OnlineClass",
-    CLASSES = "OfflineClass",
-    STUDY = "Homework",
-    TASK = "Task"
-}
-export declare enum AssessmentStatus {
-    COMPLETE = "complete",
-    IN_PROGRESS = "in_progress"
-}
-export declare enum ScheduleStatus {
-    NOT_START = "NotStart",
-    STARTED = "Started",
-    CLOSED = "Closed"
-}
-declare type RepeatEndType = `never` | `after_count` | `after_time`;
-declare type ScheduleRepeatType = `daily` | `weekly` | `monthly` | `yearly`;
-declare type ScheduleViewType = `day` | `work_week` | `week` | `month` | `year` | `full_view`;
+export declare type ScheduleClassType = `OnlineClass` | `OfflineClass` | `Homework` | `Task`;
+export declare type AssessmentStatus = `complete` | `in_progress`;
+export declare type ScheduleStatus = `NotStart` | `Started` | `Closed`;
+export declare type RepeatEndType = `never` | `after_count` | `after_time`;
+export declare type ScheduleRepeatType = `daily` | `weekly` | `monthly` | `yearly`;
+export declare type ScheduleViewType = `day` | `work_week` | `week` | `month` | `year` | `full_view`;
+export declare type ScheduleLiveTokenType = `live` | `preview`;
+export declare type TimeBoundary = `intersect` | `union`;
 interface RepeatEnd {
     after_count: number;
     after_time: number;
@@ -46,10 +36,6 @@ export interface SchedulesTimeViewListItem {
     start_at: number;
     status: ScheduleStatus;
     title: string;
-}
-export declare enum ScheduleLiveTokenType {
-    LIVE = "live",
-    PREVIEW = "preview"
 }
 interface GetScheduleByIdRequest extends BaseRequest {
     schedule_id: string;
@@ -106,14 +92,15 @@ interface PostSchedulesTimeViewListRequest extends BaseRequest {
     due_at_eq?: number;
     end_at_le?: number;
     order_by?: string;
-    page?: number;
     page_size?: number;
+    page?: number;
     program_ids?: string[];
     school_ids?: string[];
     start_at_ge?: number;
     subject_ids?: string[];
     teacher_ids?: string[];
     time_at: number;
+    time_boundary?: TimeBoundary;
     time_zone_offset: number;
     view_type: ScheduleViewType;
     with_assessment_status?: boolean;

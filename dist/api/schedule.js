@@ -20,32 +20,9 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.usePostSchedulesTimeViewList = exports.postSchedulesTimeViewList = exports.useGetLiveTokenByScheduleId = exports.getLiveTokenByScheduleId = exports.useGetScheduleById = exports.getScheduleById = exports.ScheduleLiveTokenType = exports.ScheduleStatus = exports.AssessmentStatus = exports.ScheduleClassType = void 0;
+exports.usePostSchedulesTimeViewList = exports.postSchedulesTimeViewList = exports.useGetLiveTokenByScheduleId = exports.getLiveTokenByScheduleId = exports.useGetScheduleById = exports.getScheduleById = void 0;
 const core_1 = require("../core");
 const react_query_1 = require("react-query");
-var ScheduleClassType;
-(function (ScheduleClassType) {
-    ScheduleClassType["LIVE"] = "OnlineClass";
-    ScheduleClassType["CLASSES"] = "OfflineClass";
-    ScheduleClassType["STUDY"] = "Homework";
-    ScheduleClassType["TASK"] = "Task";
-})(ScheduleClassType = exports.ScheduleClassType || (exports.ScheduleClassType = {}));
-var AssessmentStatus;
-(function (AssessmentStatus) {
-    AssessmentStatus["COMPLETE"] = "complete";
-    AssessmentStatus["IN_PROGRESS"] = "in_progress";
-})(AssessmentStatus = exports.AssessmentStatus || (exports.AssessmentStatus = {}));
-var ScheduleStatus;
-(function (ScheduleStatus) {
-    ScheduleStatus["NOT_START"] = "NotStart";
-    ScheduleStatus["STARTED"] = "Started";
-    ScheduleStatus["CLOSED"] = "Closed";
-})(ScheduleStatus = exports.ScheduleStatus || (exports.ScheduleStatus = {}));
-var ScheduleLiveTokenType;
-(function (ScheduleLiveTokenType) {
-    ScheduleLiveTokenType["LIVE"] = "live";
-    ScheduleLiveTokenType["PREVIEW"] = "preview";
-})(ScheduleLiveTokenType = exports.ScheduleLiveTokenType || (exports.ScheduleLiveTokenType = {}));
 function getScheduleById(request, options) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
