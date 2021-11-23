@@ -1,10 +1,10 @@
+import { useCmsApiClient } from "../core";
 import {
     RequestConfigOptions,
     RequestConfigQueryOptions,
 } from "./shared";
-import { useMutation } from "react-query";
 import { AxiosInstance } from "axios";
-import { useCmsApiClient } from "../core";
+import { useMutation } from "react-query";
 
 export interface GetContentResourcePathRequest {
     resource_id: string;
