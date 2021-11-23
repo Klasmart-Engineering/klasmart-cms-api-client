@@ -127,4 +127,10 @@ export function CmsApiClientProvider (props: ProviderProps) {
     );
 }
 
-export const useCmsApiClient = () => useContext(CmsApiClientContext);
+export const useCmsApiClient = () => {
+    const context = useContext(CmsApiClientContext);
+    if (!context) {
+        throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`);
+    }
+    return context;
+}
