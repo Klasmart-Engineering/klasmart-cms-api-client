@@ -17,16 +17,16 @@ export type ScheduleViewType = `day` | `work_week` | `week` | `month` | `year` |
 export type ScheduleLiveTokenType = `live` | `preview`;
 export type TimeBoundary = `intersect` | `union`;
 
-interface RepeatEnd {
+export interface RepeatEnd {
     after_count: number;
     after_time: number;
     type: RepeatEndType;
 }
-interface ScheduleRepeatDetail {
+export interface ScheduleRepeatDetail {
     end: RepeatEnd;
     interval?: number;
 }
-interface ScheduleRepeat {
+export interface ScheduleRepeat {
     type?: ScheduleRepeatType;
     daily: ScheduleRepeatDetail;
     weekly: ScheduleRepeatDetail;
@@ -49,7 +49,7 @@ export interface SchedulesTimeViewListItem {
     title: string;
 }
 
-interface GetScheduleByIdRequest extends BaseRequest {
+export interface GetScheduleByIdRequest extends BaseRequest {
     schedule_id: string;
 }
 
@@ -104,12 +104,12 @@ export function useGetScheduleById (request: GetScheduleByIdRequest, options?: R
     return useQuery([ `getScheduleByID`, request ], () => getScheduleById(axiosClient, request, options), options?.queryOptions);
 }
 
-interface GetLiveTokenByScheduleIdRequest extends BaseRequest {
+export interface GetLiveTokenByScheduleIdRequest extends BaseRequest {
     schedule_id: string;
     live_token_type: ScheduleLiveTokenType;
 }
 
-interface GetLiveTokenByScheduleIdResponse {
+export interface GetLiveTokenByScheduleIdResponse {
     token: string;
 }
 
@@ -132,7 +132,7 @@ export function useGetLiveTokenByScheduleId (request: GetLiveTokenByScheduleIdRe
     return useQuery([ `getScheduleByID`, request ], () => getLiveTokenByScheduleId(axiosClient, request, options), options?.queryOptions);
 }
 
-interface PostSchedulesTimeViewListRequest extends BaseRequest {
+export interface PostSchedulesTimeViewListRequest extends BaseRequest {
     anytime?: boolean;
     class_ids?: string[];
     class_types?: ScheduleClassType[];
@@ -153,7 +153,7 @@ interface PostSchedulesTimeViewListRequest extends BaseRequest {
     with_assessment_status?: boolean;
 }
 
-interface PostSchedulesTimeViewListResponse {
+export interface PostSchedulesTimeViewListResponse {
     data: SchedulesTimeViewListItem[];
     total: number;
 }

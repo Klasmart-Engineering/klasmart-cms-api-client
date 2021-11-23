@@ -6,7 +6,7 @@ import { useMutation } from "react-query";
 import { AxiosInstance } from "axios";
 import { useCmsApiClient } from "../core";
 
-interface GetContentResourcePathRequest {
+export interface GetContentResourcePathRequest {
     resource_id: string;
 }
 

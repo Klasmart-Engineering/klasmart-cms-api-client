@@ -15,11 +15,22 @@ import {
     QueryClientProvider,
     QueryClientProviderProps,
 } from "react-query";
+import { getContentResourcePathById, GetContentResourcePathRequest } from "../api/content";
+import { getLiveTokenByScheduleId, GetLiveTokenByScheduleIdRequest, GetLiveTokenByScheduleIdResponse, getScheduleById, GetScheduleByIdRequest, GetScheduleByIdResponse, postSchedulesTimeViewList, PostSchedulesTimeViewListRequest, PostSchedulesTimeViewListResponse } from "../api/schedule";
+import { RequestConfigOptions } from "../api/shared";
+
+interface CmsApiActions {
+    getScheduleById: (request: GetScheduleByIdRequest, options?: RequestConfigOptions) => Promise<GetScheduleByIdResponse>;
+    getLiveTokenByScheduleId: (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions) => Promise<GetLiveTokenByScheduleIdResponse>;
+    postSchedulesTimeViewList: (request: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions) => Promise<PostSchedulesTimeViewListResponse>;
+    getContentResourcePathById: (request: GetContentResourcePathRequest, options?: RequestConfigOptions) => Promise<Blob>;
+}
 
 interface CmsApiClient {
     queryClient?: QueryClient,
     axiosClient?: AxiosInstance,
     updateHttpConfig?: (config: Partial<AxiosDefaults>) => void;
+    actions?: CmsApiActions,
 }
 interface ProviderProps extends Partial<QueryClientProviderProps> {
     children: React.ReactNode;
@@ -72,11 +83,42 @@ export function CmsApiClientProvider (props: ProviderProps) {
         ...rest,
     };
 
+    const getScheduleByIdAction = useCallback((request: GetScheduleByIdRequest, options?: RequestConfigOptions) => {
+        return getScheduleById(axiosClient, request, options);
+    }, [ axiosClient ]);
+
+    const getLiveTokenByScheduleIdAction = useCallback((request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions) => {
+        return getLiveTokenByScheduleId(axiosClient, request, options);
+    }, [ axiosClient ]);
+
+    const postSchedulesTimeViewListAction = useCallback((request: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions) => {
+        return postSchedulesTimeViewList(axiosClient, request, options);
+    }, [ axiosClient ]);
+
+    const getContentResourcePathByIdAction = useCallback((request: GetContentResourcePathRequest, options?: RequestConfigOptions) => {
+        return getContentResourcePathById(axiosClient, request, options);
+    }, [ axiosClient ]);
+
+    const actions = useMemo(() => { 
+        return {
+            getScheduleById: getScheduleByIdAction,
+            getLiveTokenByScheduleId: getLiveTokenByScheduleIdAction,
+            postSchedulesTimeViewList: postSchedulesTimeViewListAction,
+            getContentResourcePathById: getContentResourcePathByIdAction,
+        };
+    }, [ 
+        getScheduleByIdAction, 
+        getLiveTokenByScheduleIdAction, 
+        postSchedulesTimeViewListAction, 
+        getContentResourcePathByIdAction 
+    ]);
+
     return (
         <CmsApiClientContext.Provider value={{
             queryClient,
             axiosClient,
-            updateHttpConfig
+            updateHttpConfig,
+            actions,
         }}>
             <QueryClientProvider {...updatedProps}>
                 {children}
