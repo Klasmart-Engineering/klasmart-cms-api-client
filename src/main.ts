@@ -18,7 +18,7 @@ export {
 } from "./api/schedule";
 export {
     CmsApiClientProvider,
-    updateHttpConfig,
+    useCmsApiClient,
 } from "./core";
 export { useQueryClient } from  "react-query";
 export { ReactQueryDevtools } from 'react-query/devtools';
