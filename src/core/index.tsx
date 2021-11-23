@@ -55,7 +55,7 @@ export function CmsApiClientProvider (props: ProviderProps) {
         }
 
         return client;
-    }, [ config ]);
+    }, [ config, interceptors ]);
     
     const updateHttpConfig = useCallback((config: Partial<AxiosDefaults>) => {
         queryClient.cancelMutations();
