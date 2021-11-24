@@ -1,9 +1,21 @@
+import { GetContentResourcePathRequest } from "../api/content";
+import { GetLiveTokenByScheduleIdRequest, GetLiveTokenByScheduleIdResponse, GetScheduleByIdRequest, GetScheduleByIdResponse, PostSchedulesTimeViewListRequest, PostSchedulesTimeViewListResponse } from "../api/schedule";
+import { RequestConfigOptions } from "../api/shared";
 import { AxiosDefaults, AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import React from "react";
 import { DefaultOptions, MutationCache, QueryCache, QueryClient, QueryClientProviderProps } from "react-query";
-export declare let client: AxiosInstance;
-export declare let queryClient: QueryClient;
-export declare function updateHttpConfig(config: Partial<AxiosDefaults>): void;
+interface CmsApiActions {
+    getScheduleById: (request: GetScheduleByIdRequest, options?: RequestConfigOptions) => Promise<GetScheduleByIdResponse>;
+    getLiveTokenByScheduleId: (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions) => Promise<GetLiveTokenByScheduleIdResponse>;
+    postSchedulesTimeViewList: (request: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions) => Promise<PostSchedulesTimeViewListResponse>;
+    getContentResourcePathById: (request: GetContentResourcePathRequest, options?: RequestConfigOptions) => Promise<Blob>;
+}
+interface CmsApiClient {
+    queryClient: QueryClient;
+    axiosClient: AxiosInstance;
+    updateHttpConfig: (config: Partial<AxiosDefaults>) => void;
+    actions: CmsApiActions;
+}
 interface ProviderProps extends Partial<QueryClientProviderProps> {
     children: React.ReactNode;
     config: AxiosRequestConfig;
@@ -18,4 +30,5 @@ interface ProviderProps extends Partial<QueryClientProviderProps> {
     };
 }
 export declare function CmsApiClientProvider(props: ProviderProps): JSX.Element;
+export declare const useCmsApiClient: () => CmsApiClient;
 export {};

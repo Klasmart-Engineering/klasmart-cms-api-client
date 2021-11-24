@@ -1,4 +1,5 @@
 import { BaseRequest, ForeignIdName, RequestConfigOptions, RequestConfigQueryOptions } from "./shared";
+import { AxiosInstance } from "axios";
 export declare type ScheduleClassType = `OnlineClass` | `OfflineClass` | `Homework` | `Task`;
 export declare type AssessmentStatus = `complete` | `in_progress`;
 export declare type ScheduleStatus = `NotStart` | `Started` | `Closed`;
@@ -7,16 +8,16 @@ export declare type ScheduleRepeatType = `daily` | `weekly` | `monthly` | `yearl
 export declare type ScheduleViewType = `day` | `work_week` | `week` | `month` | `year` | `full_view`;
 export declare type ScheduleLiveTokenType = `live` | `preview`;
 export declare type TimeBoundary = `intersect` | `union`;
-interface RepeatEnd {
+export interface RepeatEnd {
     after_count: number;
     after_time: number;
     type: RepeatEndType;
 }
-interface ScheduleRepeatDetail {
+export interface ScheduleRepeatDetail {
     end: RepeatEnd;
     interval?: number;
 }
-interface ScheduleRepeat {
+export interface ScheduleRepeat {
     type?: ScheduleRepeatType;
     daily: ScheduleRepeatDetail;
     weekly: ScheduleRepeatDetail;
@@ -37,7 +38,7 @@ export interface SchedulesTimeViewListItem {
     status: ScheduleStatus;
     title: string;
 }
-interface GetScheduleByIdRequest extends BaseRequest {
+export interface GetScheduleByIdRequest extends BaseRequest {
     schedule_id: string;
 }
 export interface GetScheduleByIdResponse {
@@ -74,18 +75,18 @@ export interface GetScheduleByIdResponse {
     title: string;
     version: number;
 }
-export declare function getScheduleById(request: GetScheduleByIdRequest, options?: RequestConfigOptions): Promise<GetScheduleByIdResponse>;
+export declare function getScheduleById(client: AxiosInstance, request: GetScheduleByIdRequest, options?: RequestConfigOptions): Promise<GetScheduleByIdResponse>;
 export declare function useGetScheduleById(request: GetScheduleByIdRequest, options?: RequestConfigQueryOptions<GetScheduleByIdResponse>): import("react-query").UseQueryResult<GetScheduleByIdResponse, unknown>;
-interface GetLiveTokenByScheduleIdRequest extends BaseRequest {
+export interface GetLiveTokenByScheduleIdRequest extends BaseRequest {
     schedule_id: string;
     live_token_type: ScheduleLiveTokenType;
 }
-interface GetLiveTokenByScheduleIdResponse {
+export interface GetLiveTokenByScheduleIdResponse {
     token: string;
 }
-export declare function getLiveTokenByScheduleId(request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions): Promise<GetLiveTokenByScheduleIdResponse>;
+export declare function getLiveTokenByScheduleId(client: AxiosInstance, request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions): Promise<GetLiveTokenByScheduleIdResponse>;
 export declare function useGetLiveTokenByScheduleId(request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetLiveTokenByScheduleIdResponse>): import("react-query").UseQueryResult<GetLiveTokenByScheduleIdResponse, unknown>;
-interface PostSchedulesTimeViewListRequest extends BaseRequest {
+export interface PostSchedulesTimeViewListRequest extends BaseRequest {
     anytime?: boolean;
     class_ids?: string[];
     class_types?: ScheduleClassType[];
@@ -105,10 +106,9 @@ interface PostSchedulesTimeViewListRequest extends BaseRequest {
     view_type: ScheduleViewType;
     with_assessment_status?: boolean;
 }
-interface PostSchedulesTimeViewListResponse {
+export interface PostSchedulesTimeViewListResponse {
     data: SchedulesTimeViewListItem[];
     total: number;
 }
-export declare function postSchedulesTimeViewList(request: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions): Promise<PostSchedulesTimeViewListResponse>;
+export declare function postSchedulesTimeViewList(client: AxiosInstance, request: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions): Promise<PostSchedulesTimeViewListResponse>;
 export declare function usePostSchedulesTimeViewList(request: PostSchedulesTimeViewListRequest, options?: RequestConfigQueryOptions<PostSchedulesTimeViewListResponse>): import("react-query").UseQueryResult<PostSchedulesTimeViewListResponse, unknown>;
-export {};
