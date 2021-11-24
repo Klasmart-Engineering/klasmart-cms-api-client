@@ -99,8 +99,6 @@ export async function getScheduleById (client: AxiosInstance, request: GetSchedu
 
 export function useGetScheduleById (request: GetScheduleByIdRequest, options?: RequestConfigQueryOptions<GetScheduleByIdResponse>) {
     const { axiosClient } = useCmsApiClient();
-    if (!axiosClient) throw new Error(`Axios client unavailable.`);
-
     return useQuery([ `getScheduleByID`, request ], () => getScheduleById(axiosClient, request, options), options?.queryOptions);
 }
 
@@ -127,8 +125,6 @@ export async function getLiveTokenByScheduleId (client: AxiosInstance, request: 
 
 export function useGetLiveTokenByScheduleId (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetLiveTokenByScheduleIdResponse>) {
     const { axiosClient } = useCmsApiClient();
-    if (!axiosClient) throw new Error(`Axios client unavailable.`);
-
     return useQuery([ `getScheduleByID`, request ], () => getLiveTokenByScheduleId(axiosClient, request, options), options?.queryOptions);
 }
 
@@ -172,7 +168,5 @@ export async function postSchedulesTimeViewList (client: AxiosInstance, request:
 
 export function usePostSchedulesTimeViewList (request: PostSchedulesTimeViewListRequest, options?: RequestConfigQueryOptions<PostSchedulesTimeViewListResponse>) {
     const { axiosClient } = useCmsApiClient();
-    if (!axiosClient) throw new Error(`Axios client unavailable.`);
-
     return useQuery([ `getScheduleTimeViewList`, request ], () => postSchedulesTimeViewList(axiosClient, request, options), options?.queryOptions);
 }

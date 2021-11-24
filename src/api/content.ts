@@ -21,7 +21,5 @@ export async function getContentResourcePathById (client: AxiosInstance, request
 
 export function useGetContentResourcePathById (request: GetContentResourcePathRequest, options?: RequestConfigQueryOptions<Blob>) {
     const { axiosClient } = useCmsApiClient();
-    if (!axiosClient) throw new Error(`Axios client unavailable.`);
-
     return useMutation([ `getDownloadPath`, request ], () => getContentResourcePathById(axiosClient, request, options), options?.queryOptions);
 }

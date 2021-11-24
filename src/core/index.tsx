@@ -46,10 +46,10 @@ interface CmsApiActions {
 }
 
 interface CmsApiClient {
-    queryClient?: QueryClient;
-    axiosClient?: AxiosInstance;
-    updateHttpConfig?: (config: Partial<AxiosDefaults>) => void;
-    actions?: CmsApiActions;
+    queryClient: QueryClient;
+    axiosClient: AxiosInstance;
+    updateHttpConfig: (config: Partial<AxiosDefaults>) => void;
+    actions: CmsApiActions;
 }
 interface ProviderProps extends Partial<QueryClientProviderProps> {
     children: React.ReactNode;
@@ -65,7 +65,17 @@ interface ProviderProps extends Partial<QueryClientProviderProps> {
     };
 }
 
-const CmsApiClientContext = createContext<CmsApiClient>({});
+const CmsApiClientContext = createContext<CmsApiClient>({
+    queryClient: (null as unknown) as QueryClient,
+    axiosClient: (null as unknown) as AxiosInstance,
+    updateHttpConfig: () => { throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`); },
+    actions: {
+        getScheduleById: () => { throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`); },
+        getLiveTokenByScheduleId: () => { throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`); },
+        postSchedulesTimeViewList: () => { throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`); },
+        getContentResourcePathById: () => { throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`); },
+    },
+});
 
 export function CmsApiClientProvider (props: ProviderProps) {
     const {
