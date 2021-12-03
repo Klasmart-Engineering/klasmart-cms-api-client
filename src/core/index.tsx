@@ -9,6 +9,9 @@ import {
     getScheduleById,
     GetScheduleByIdRequest,
     GetScheduleByIdResponse,
+    postScheduleFeedback,
+    PostScheduleFeedbackRequest,
+    PostScheduleFeedbackResponse,
     postSchedulesTimeViewList,
     PostSchedulesTimeViewListRequest,
     PostSchedulesTimeViewListResponse,
@@ -42,6 +45,7 @@ interface CmsApiActions {
     getScheduleById: (request: GetScheduleByIdRequest, options?: RequestConfigOptions) => Promise<GetScheduleByIdResponse>;
     getLiveTokenByScheduleId: (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions) => Promise<GetLiveTokenByScheduleIdResponse>;
     postSchedulesTimeViewList: (request: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions) => Promise<PostSchedulesTimeViewListResponse>;
+    postAddScheduleFeedback: (request: PostScheduleFeedbackRequest, options?: RequestConfigOptions) => Promise<PostScheduleFeedbackResponse>;
     getContentResourcePathById: (request: GetContentResourcePathRequest, options?: RequestConfigOptions) => Promise<Blob>;
 }
 
@@ -65,15 +69,23 @@ interface ProviderProps extends Partial<QueryClientProviderProps> {
     };
 }
 
+class CmsApiClientNoProviderError extends Error {
+    constructor () {
+        super(`useCmsApiClient must be used within a CmsApiClientContext.Provider`);
+        this.name = `NO_PROVIDER`;
+    }
+}
+
 const CmsApiClientContext = createContext<CmsApiClient>({
     queryClient: (null as unknown) as QueryClient,
     axiosClient: (null as unknown) as AxiosInstance,
-    updateHttpConfig: () => { throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`); },
+    updateHttpConfig: () => { throw new CmsApiClientNoProviderError(); },
     actions: {
-        getScheduleById: () => { throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`); },
-        getLiveTokenByScheduleId: () => { throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`); },
-        postSchedulesTimeViewList: () => { throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`); },
-        getContentResourcePathById: () => { throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`); },
+        getScheduleById: () => { throw new CmsApiClientNoProviderError(); },
+        getLiveTokenByScheduleId: () => { throw new CmsApiClientNoProviderError(); },
+        postSchedulesTimeViewList: () => { throw new CmsApiClientNoProviderError(); },
+        postAddScheduleFeedback: () => { throw new CmsApiClientNoProviderError(); },
+        getContentResourcePathById: () => { throw new CmsApiClientNoProviderError(); },
     },
 });
 
@@ -113,19 +125,23 @@ export function CmsApiClientProvider (props: ProviderProps) {
     };
 
     const getScheduleByIdAction = useCallback((request: GetScheduleByIdRequest, options?: RequestConfigOptions) => {
-        return getScheduleById(axiosClient, request, options);
+        return getScheduleById(axiosClient, request, options?.config);
     }, [ axiosClient ]);
 
     const getLiveTokenByScheduleIdAction = useCallback((request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions) => {
-        return getLiveTokenByScheduleId(axiosClient, request, options);
+        return getLiveTokenByScheduleId(axiosClient, request, options?.config);
     }, [ axiosClient ]);
 
     const postSchedulesTimeViewListAction = useCallback((request: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions) => {
-        return postSchedulesTimeViewList(axiosClient, request, options);
+        return postSchedulesTimeViewList(axiosClient, request, options?.config);
+    }, [ axiosClient ]);
+
+    const postAddScheduleFeedbackAction = useCallback((request: PostScheduleFeedbackRequest, options?: RequestConfigOptions) => {
+        return postScheduleFeedback(axiosClient, request, options?.config);
     }, [ axiosClient ]);
 
     const getContentResourcePathByIdAction = useCallback((request: GetContentResourcePathRequest, options?: RequestConfigOptions) => {
-        return getContentResourcePathById(axiosClient, request, options);
+        return getContentResourcePathById(axiosClient, request, options?.config);
     }, [ axiosClient ]);
 
     const actions = useMemo(() => {
@@ -133,12 +149,14 @@ export function CmsApiClientProvider (props: ProviderProps) {
             getScheduleById: getScheduleByIdAction,
             getLiveTokenByScheduleId: getLiveTokenByScheduleIdAction,
             postSchedulesTimeViewList: postSchedulesTimeViewListAction,
+            postAddScheduleFeedback: postAddScheduleFeedbackAction,
             getContentResourcePathById: getContentResourcePathByIdAction,
         };
     }, [
         getScheduleByIdAction,
         getLiveTokenByScheduleIdAction,
         postSchedulesTimeViewListAction,
+        postAddScheduleFeedbackAction,
         getContentResourcePathByIdAction,
     ]);
 
@@ -159,7 +177,7 @@ export function CmsApiClientProvider (props: ProviderProps) {
 export const useCmsApiClient = () => {
     const context = useContext(CmsApiClientContext);
     if (!context) {
-        throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`);
+        throw new CmsApiClientNoProviderError();
     }
     return context;
 };

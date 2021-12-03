@@ -13,12 +13,12 @@ export interface RequestConfigOptions {
     config?: AxiosRequestConfig;
 }
 
-export interface RequestConfigQueryOptions<T> extends RequestConfigOptions {
-    queryOptions?: Omit<UseQueryOptions<T>, 'queryKey' | 'queryFn'>;
+export interface RequestConfigQueryOptions<TData> extends RequestConfigOptions {
+    queryOptions?: Omit<UseQueryOptions<TData, unknown, TData>, 'queryKey' | 'queryFn'>;
 }
 
-export interface RequestConfigMutationOptions extends RequestConfigOptions {
-    mutationOptions?: Omit<UseMutationOptions, 'queryKey' | 'queryFn'>;
+export interface RequestConfigMutationOptions<TData, TVariables> extends RequestConfigOptions {
+    mutationOptions?: Omit<UseMutationOptions<TData, unknown, TVariables>, 'queryKey' | 'queryFn'>;
 }
 
 export interface BaseRequest {

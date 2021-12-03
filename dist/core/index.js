@@ -39,15 +39,22 @@ const schedule_1 = require("../api/schedule");
 const axios_1 = __importDefault(require("axios"));
 const react_1 = __importStar(require("react"));
 const react_query_1 = require("react-query");
+class CmsApiClientNoProviderError extends Error {
+    constructor() {
+        super(`useCmsApiClient must be used within a CmsApiClientContext.Provider`);
+        this.name = `NO_PROVIDER`;
+    }
+}
 const CmsApiClientContext = (0, react_1.createContext)({
     queryClient: null,
     axiosClient: null,
-    updateHttpConfig: () => { throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`); },
+    updateHttpConfig: () => { throw new CmsApiClientNoProviderError(); },
     actions: {
-        getScheduleById: () => { throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`); },
-        getLiveTokenByScheduleId: () => { throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`); },
-        postSchedulesTimeViewList: () => { throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`); },
-        getContentResourcePathById: () => { throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`); },
+        getScheduleById: () => { throw new CmsApiClientNoProviderError(); },
+        getLiveTokenByScheduleId: () => { throw new CmsApiClientNoProviderError(); },
+        postSchedulesTimeViewList: () => { throw new CmsApiClientNoProviderError(); },
+        postAddScheduleFeedback: () => { throw new CmsApiClientNoProviderError(); },
+        getContentResourcePathById: () => { throw new CmsApiClientNoProviderError(); },
     },
 });
 function CmsApiClientProvider(props) {
@@ -68,28 +75,33 @@ function CmsApiClientProvider(props) {
     }, [axiosClient, queryClient]);
     const updatedProps = Object.assign({ client: queryClient }, rest);
     const getScheduleByIdAction = (0, react_1.useCallback)((request, options) => {
-        return (0, schedule_1.getScheduleById)(axiosClient, request, options);
+        return (0, schedule_1.getScheduleById)(axiosClient, request, options === null || options === void 0 ? void 0 : options.config);
     }, [axiosClient]);
     const getLiveTokenByScheduleIdAction = (0, react_1.useCallback)((request, options) => {
-        return (0, schedule_1.getLiveTokenByScheduleId)(axiosClient, request, options);
+        return (0, schedule_1.getLiveTokenByScheduleId)(axiosClient, request, options === null || options === void 0 ? void 0 : options.config);
     }, [axiosClient]);
     const postSchedulesTimeViewListAction = (0, react_1.useCallback)((request, options) => {
-        return (0, schedule_1.postSchedulesTimeViewList)(axiosClient, request, options);
+        return (0, schedule_1.postSchedulesTimeViewList)(axiosClient, request, options === null || options === void 0 ? void 0 : options.config);
+    }, [axiosClient]);
+    const postAddScheduleFeedbackAction = (0, react_1.useCallback)((request, options) => {
+        return (0, schedule_1.postScheduleFeedback)(axiosClient, request, options === null || options === void 0 ? void 0 : options.config);
     }, [axiosClient]);
     const getContentResourcePathByIdAction = (0, react_1.useCallback)((request, options) => {
-        return (0, content_1.getContentResourcePathById)(axiosClient, request, options);
+        return (0, content_1.getContentResourcePathById)(axiosClient, request, options === null || options === void 0 ? void 0 : options.config);
     }, [axiosClient]);
     const actions = (0, react_1.useMemo)(() => {
         return {
             getScheduleById: getScheduleByIdAction,
             getLiveTokenByScheduleId: getLiveTokenByScheduleIdAction,
             postSchedulesTimeViewList: postSchedulesTimeViewListAction,
+            postAddScheduleFeedback: postAddScheduleFeedbackAction,
             getContentResourcePathById: getContentResourcePathByIdAction,
         };
     }, [
         getScheduleByIdAction,
         getLiveTokenByScheduleIdAction,
         postSchedulesTimeViewListAction,
+        postAddScheduleFeedbackAction,
         getContentResourcePathByIdAction,
     ]);
     return (react_1.default.createElement(CmsApiClientContext.Provider, { value: {
@@ -104,7 +116,7 @@ exports.CmsApiClientProvider = CmsApiClientProvider;
 const useCmsApiClient = () => {
     const context = (0, react_1.useContext)(CmsApiClientContext);
     if (!context) {
-        throw new Error(`useCmsApiClient must be used within a CmsApiClientContext.Provider`);
+        throw new CmsApiClientNoProviderError();
     }
     return context;
 };

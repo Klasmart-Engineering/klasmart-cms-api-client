@@ -1,5 +1,6 @@
-import { BaseRequest, ForeignIdName, RequestConfigOptions, RequestConfigQueryOptions } from "./shared";
-import { AxiosInstance } from "axios";
+import { BaseRequest, ForeignIdName, RequestConfigMutationOptions, RequestConfigQueryOptions } from "./shared";
+import { AxiosInstance, AxiosRequestConfig } from "axios";
+import { MutationKey, QueryKey } from "react-query";
 export declare type ScheduleClassType = `OnlineClass` | `OfflineClass` | `Homework` | `Task`;
 export declare type AssessmentStatus = `complete` | `in_progress`;
 export declare type ScheduleStatus = `NotStart` | `Started` | `Closed`;
@@ -8,6 +9,11 @@ export declare type ScheduleRepeatType = `daily` | `weekly` | `monthly` | `yearl
 export declare type ScheduleViewType = `day` | `work_week` | `week` | `month` | `year` | `full_view`;
 export declare type ScheduleLiveTokenType = `live` | `preview`;
 export declare type TimeBoundary = `intersect` | `union`;
+export interface FeedbackAssignmentView {
+    attachment_id: string;
+    attachment_name: string;
+    number: number;
+}
 export interface RepeatEnd {
     after_count: number;
     after_time: number;
@@ -28,6 +34,7 @@ export interface SchedulesTimeViewListItem {
     assessment_status: AssessmentStatus;
     class_id: string;
     class_type: ScheduleClassType;
+    created_at: number;
     due_at: number;
     end_at: number;
     id: string;
@@ -75,7 +82,8 @@ export interface GetScheduleByIdResponse {
     title: string;
     version: number;
 }
-export declare function getScheduleById(client: AxiosInstance, request: GetScheduleByIdRequest, options?: RequestConfigOptions): Promise<GetScheduleByIdResponse>;
+export declare function getScheduleById(client: AxiosInstance, request: GetScheduleByIdRequest, config?: AxiosRequestConfig): Promise<GetScheduleByIdResponse>;
+export declare const GET_SCHEDULE_BY_ID_QUERY_KEY: QueryKey;
 export declare function useGetScheduleById(request: GetScheduleByIdRequest, options?: RequestConfigQueryOptions<GetScheduleByIdResponse>): import("react-query").UseQueryResult<GetScheduleByIdResponse, unknown>;
 export interface GetLiveTokenByScheduleIdRequest extends BaseRequest {
     schedule_id: string;
@@ -84,7 +92,8 @@ export interface GetLiveTokenByScheduleIdRequest extends BaseRequest {
 export interface GetLiveTokenByScheduleIdResponse {
     token: string;
 }
-export declare function getLiveTokenByScheduleId(client: AxiosInstance, request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions): Promise<GetLiveTokenByScheduleIdResponse>;
+export declare function getLiveTokenByScheduleId(client: AxiosInstance, request: GetLiveTokenByScheduleIdRequest, config?: AxiosRequestConfig): Promise<GetLiveTokenByScheduleIdResponse>;
+export declare const GET_LIVE_TOKEN_BY_SCHEDULE_ID_QUERY_KEY: QueryKey;
 export declare function useGetLiveTokenByScheduleId(request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetLiveTokenByScheduleIdResponse>): import("react-query").UseQueryResult<GetLiveTokenByScheduleIdResponse, unknown>;
 export interface PostSchedulesTimeViewListRequest extends BaseRequest {
     anytime?: boolean;
@@ -110,5 +119,20 @@ export interface PostSchedulesTimeViewListResponse {
     data: SchedulesTimeViewListItem[];
     total: number;
 }
-export declare function postSchedulesTimeViewList(client: AxiosInstance, request: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions): Promise<PostSchedulesTimeViewListResponse>;
+export declare function postSchedulesTimeViewList(client: AxiosInstance, request: PostSchedulesTimeViewListRequest, config?: AxiosRequestConfig): Promise<PostSchedulesTimeViewListResponse>;
+export declare const GET_SCHEDULE_TIME_VIEW_LIST_QUERY_KEY: QueryKey;
 export declare function usePostSchedulesTimeViewList(request: PostSchedulesTimeViewListRequest, options?: RequestConfigQueryOptions<PostSchedulesTimeViewListResponse>): import("react-query").UseQueryResult<PostSchedulesTimeViewListResponse, unknown>;
+export interface PostScheduleFeedbackRequest extends BaseRequest {
+    assignments: FeedbackAssignmentView[];
+    comment: string;
+    schedule_id: string;
+}
+export interface PostScheduleFeedbackResponse {
+    data: {
+        id: string;
+    };
+    label: string;
+}
+export declare function postScheduleFeedback(client: AxiosInstance, request: PostScheduleFeedbackRequest, config?: AxiosRequestConfig): Promise<PostScheduleFeedbackResponse>;
+export declare const POST_SCHEDULE_FEEDBACK_MUTATION_KEY: MutationKey;
+export declare function usePostScheduleFeedback(request?: PostScheduleFeedbackRequest, options?: RequestConfigMutationOptions<PostScheduleFeedbackResponse, PostScheduleFeedbackRequest>): import("react-query").UseMutationResult<PostScheduleFeedbackResponse, unknown, PostScheduleFeedbackRequest, unknown>;

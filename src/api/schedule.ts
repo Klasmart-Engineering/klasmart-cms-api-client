@@ -2,11 +2,20 @@ import { useCmsApiClient } from "../core";
 import {
     BaseRequest,
     ForeignIdName,
-    RequestConfigOptions,
+    RequestConfigMutationOptions,
     RequestConfigQueryOptions,
 } from "./shared";
-import { AxiosInstance } from "axios";
-import { useQuery } from "react-query";
+import {
+    AxiosInstance,
+    AxiosRequestConfig,
+} from "axios";
+import {
+    MutationKey,
+    QueryKey,
+    useMutation,
+    useQuery,
+    useQueryClient,
+} from "react-query";
 
 export type ScheduleClassType = `OnlineClass` | `OfflineClass` | `Homework` | `Task`;
 export type AssessmentStatus = `complete` | `in_progress`;
@@ -16,6 +25,12 @@ export type ScheduleRepeatType = `daily` | `weekly` | `monthly` | `yearly`;
 export type ScheduleViewType = `day` | `work_week` | `week` | `month` | `year` | `full_view`
 export type ScheduleLiveTokenType = `live` | `preview`;
 export type TimeBoundary = `intersect` | `union`;
+
+export interface FeedbackAssignmentView {
+    attachment_id: string;
+    attachment_name: string;
+    number: number;
+}
 
 export interface RepeatEnd {
     after_count: number;
@@ -38,6 +53,7 @@ export interface SchedulesTimeViewListItem {
     assessment_status: AssessmentStatus;
     class_id: string;
     class_type: ScheduleClassType;
+    created_at: number;
     due_at: number;
     end_at: number;
     id: string;
@@ -85,21 +101,23 @@ export interface GetScheduleByIdResponse {
     version: number;
 }
 
-export async function getScheduleById (client: AxiosInstance, request: GetScheduleByIdRequest, options?: RequestConfigOptions) {
+export async function getScheduleById (client: AxiosInstance, request: GetScheduleByIdRequest, config?: AxiosRequestConfig) {
     const { schedule_id, ...rest } = request;
     const resp = await client.get<GetScheduleByIdResponse>(`/v1/schedules/${schedule_id}`, {
+        ...config,
         params: {
             ...rest,
-            ...options?.config?.params,
+            ...config?.params,
         },
-        ...options?.config,
     });
     return resp.data;
 }
 
+export const GET_SCHEDULE_BY_ID_QUERY_KEY: QueryKey = `getScheduleByID`;
+
 export function useGetScheduleById (request: GetScheduleByIdRequest, options?: RequestConfigQueryOptions<GetScheduleByIdResponse>) {
     const { axiosClient } = useCmsApiClient();
-    return useQuery([ `getScheduleByID`, request ], () => getScheduleById(axiosClient, request, options), options?.queryOptions);
+    return useQuery([ GET_SCHEDULE_BY_ID_QUERY_KEY, request ], () => getScheduleById(axiosClient, request, options?.config), options?.queryOptions);
 }
 
 export interface GetLiveTokenByScheduleIdRequest extends BaseRequest {
@@ -111,21 +129,23 @@ export interface GetLiveTokenByScheduleIdResponse {
     token: string;
 }
 
-export async function getLiveTokenByScheduleId (client: AxiosInstance, request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions) {
+export async function getLiveTokenByScheduleId (client: AxiosInstance, request: GetLiveTokenByScheduleIdRequest, config?: AxiosRequestConfig) {
     const { schedule_id, ...rest } = request;
     const resp = await client.get<GetLiveTokenByScheduleIdResponse>(`/v1/schedules/${schedule_id}/live/token`, {
+        ...config,
         params: {
             ...rest,
-            ...options?.config?.params,
+            ...config?.params,
         },
-        ...options?.config,
     });
     return resp.data;
 }
 
+export const GET_LIVE_TOKEN_BY_SCHEDULE_ID_QUERY_KEY: QueryKey = `getScheduleByID`;
+
 export function useGetLiveTokenByScheduleId (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigQueryOptions<GetLiveTokenByScheduleIdResponse>) {
     const { axiosClient } = useCmsApiClient();
-    return useQuery([ `getScheduleByID`, request ], () => getLiveTokenByScheduleId(axiosClient, request, options), options?.queryOptions);
+    return useQuery([ GET_LIVE_TOKEN_BY_SCHEDULE_ID_QUERY_KEY, request ], () => getLiveTokenByScheduleId(axiosClient, request, options?.config), options?.queryOptions);
 }
 
 export interface PostSchedulesTimeViewListRequest extends BaseRequest {
@@ -154,19 +174,60 @@ export interface PostSchedulesTimeViewListResponse {
     total: number;
 }
 
-export async function postSchedulesTimeViewList (client: AxiosInstance, request: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions) {
+export async function postSchedulesTimeViewList (client: AxiosInstance, request: PostSchedulesTimeViewListRequest, config?: AxiosRequestConfig) {
     const { org_id, ...rest } = request;
     const resp = await client.post<PostSchedulesTimeViewListResponse>(`/v1/schedules_time_view/list`, rest, {
+        ...config,
         params: {
             org_id,
-            ...options?.config?.params,
+            ...config?.params,
         },
-        ...options?.config,
     });
     return resp.data;
 }
 
+export const GET_SCHEDULE_TIME_VIEW_LIST_QUERY_KEY: QueryKey = `getScheduleTimeViewList`;
+
 export function usePostSchedulesTimeViewList (request: PostSchedulesTimeViewListRequest, options?: RequestConfigQueryOptions<PostSchedulesTimeViewListResponse>) {
     const { axiosClient } = useCmsApiClient();
-    return useQuery([ `getScheduleTimeViewList`, request ], () => postSchedulesTimeViewList(axiosClient, request, options), options?.queryOptions);
+    return useQuery([ GET_SCHEDULE_TIME_VIEW_LIST_QUERY_KEY, request ], () => postSchedulesTimeViewList(axiosClient, request, options?.config), options?.queryOptions);
+}
+
+export interface PostScheduleFeedbackRequest extends BaseRequest {
+    assignments: FeedbackAssignmentView[];
+    comment: string;
+    schedule_id: string;
+  }
+
+export interface PostScheduleFeedbackResponse {
+    data: {
+        id: string;
+    };
+    label: string;
+}
+
+export async function postScheduleFeedback (client: AxiosInstance, request: PostScheduleFeedbackRequest, config?: AxiosRequestConfig) {
+    const { org_id, ...rest } = request;
+    const resp = await client.post<PostScheduleFeedbackResponse>(`/v1/schedules_feedbacks`, rest, {
+        ...config,
+        params: {
+            org_id,
+            ...config?.params,
+        },
+    });
+    return resp.data;
+}
+
+export const POST_SCHEDULE_FEEDBACK_MUTATION_KEY: MutationKey = `addScheduleFeedback`;
+
+export function usePostScheduleFeedback (request?: PostScheduleFeedbackRequest, options?: RequestConfigMutationOptions<PostScheduleFeedbackResponse, PostScheduleFeedbackRequest>) {
+    const { axiosClient } = useCmsApiClient();
+    const queryClient = useQueryClient();
+    return useMutation([ POST_SCHEDULE_FEEDBACK_MUTATION_KEY, request ], (request) => postScheduleFeedback(axiosClient, request, options?.config), {
+        ...options?.mutationOptions,
+        onSuccess: (data, variables, context) => {
+            queryClient.invalidateQueries(GET_SCHEDULE_TIME_VIEW_LIST_QUERY_KEY);
+            options?.mutationOptions?.onSuccess?.(data, variables, context);
+        },
+    });
 }

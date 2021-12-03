@@ -1,5 +1,5 @@
 import { GetContentResourcePathRequest } from "../api/content";
-import { GetLiveTokenByScheduleIdRequest, GetLiveTokenByScheduleIdResponse, GetScheduleByIdRequest, GetScheduleByIdResponse, PostSchedulesTimeViewListRequest, PostSchedulesTimeViewListResponse } from "../api/schedule";
+import { GetLiveTokenByScheduleIdRequest, GetLiveTokenByScheduleIdResponse, GetScheduleByIdRequest, GetScheduleByIdResponse, PostScheduleFeedbackRequest, PostScheduleFeedbackResponse, PostSchedulesTimeViewListRequest, PostSchedulesTimeViewListResponse } from "../api/schedule";
 import { RequestConfigOptions } from "../api/shared";
 import { AxiosDefaults, AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import React from "react";
@@ -8,6 +8,7 @@ interface CmsApiActions {
     getScheduleById: (request: GetScheduleByIdRequest, options?: RequestConfigOptions) => Promise<GetScheduleByIdResponse>;
     getLiveTokenByScheduleId: (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions) => Promise<GetLiveTokenByScheduleIdResponse>;
     postSchedulesTimeViewList: (request: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions) => Promise<PostSchedulesTimeViewListResponse>;
+    postAddScheduleFeedback: (request: PostScheduleFeedbackRequest, options?: RequestConfigOptions) => Promise<PostScheduleFeedbackResponse>;
     getContentResourcePathById: (request: GetContentResourcePathRequest, options?: RequestConfigOptions) => Promise<Blob>;
 }
 interface CmsApiClient {
