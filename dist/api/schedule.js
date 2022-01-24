@@ -20,7 +20,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.usePostScheduleFeedback = exports.POST_SCHEDULE_FEEDBACK_MUTATION_KEY = exports.postScheduleFeedback = exports.usePostSchedulesTimeViewList = exports.GET_SCHEDULE_TIME_VIEW_LIST_QUERY_KEY = exports.postSchedulesTimeViewList = exports.useGetLiveTokenByScheduleId = exports.GET_LIVE_TOKEN_BY_SCHEDULE_ID_QUERY_KEY = exports.getLiveTokenByScheduleId = exports.useGetScheduleById = exports.GET_SCHEDULE_BY_ID_QUERY_KEY = exports.getScheduleById = void 0;
+exports.useGetStudentAssessments = exports.GET_STUDENT_ASSESSMENTS_QUERY_KEY = exports.getStudentAssessments = exports.useGetScheduleNewestFeedbackById = exports.GET_SCHEDULE_NEWEST_FEEDBACK_BY_ID_QUERY_KEY = exports.getScheduleNewestFeedbackById = exports.usePostScheduleFeedback = exports.POST_SCHEDULE_FEEDBACK_MUTATION_KEY = exports.postScheduleFeedback = exports.usePostSchedulesTimeViewList = exports.GET_SCHEDULE_TIME_VIEW_LIST_QUERY_KEY = exports.postSchedulesTimeViewList = exports.useGetLiveTokenByScheduleId = exports.GET_LIVE_TOKEN_BY_SCHEDULE_ID_QUERY_KEY = exports.getLiveTokenByScheduleId = exports.useGetScheduleById = exports.GET_SCHEDULE_BY_ID_QUERY_KEY = exports.getScheduleById = void 0;
 const core_1 = require("../core");
 const react_query_1 = require("react-query");
 function getScheduleById(client, request, config) {
@@ -80,7 +80,35 @@ function usePostScheduleFeedback(request, options) {
     return (0, react_query_1.useMutation)([exports.POST_SCHEDULE_FEEDBACK_MUTATION_KEY, request], (request) => postScheduleFeedback(axiosClient, request, options === null || options === void 0 ? void 0 : options.config), Object.assign(Object.assign({}, options === null || options === void 0 ? void 0 : options.mutationOptions), { onSuccess: (data, variables, context) => {
             var _a, _b;
             queryClient.invalidateQueries(exports.GET_SCHEDULE_TIME_VIEW_LIST_QUERY_KEY);
+            queryClient.invalidateQueries(exports.GET_SCHEDULE_NEWEST_FEEDBACK_BY_ID_QUERY_KEY);
             (_b = (_a = options === null || options === void 0 ? void 0 : options.mutationOptions) === null || _a === void 0 ? void 0 : _a.onSuccess) === null || _b === void 0 ? void 0 : _b.call(_a, data, variables, context);
         } }));
 }
 exports.usePostScheduleFeedback = usePostScheduleFeedback;
+function getScheduleNewestFeedbackById(client, request, config) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { schedule_id } = request, rest = __rest(request, ["schedule_id"]);
+        const resp = yield client.get(`/v1/schedules/${schedule_id}/operator/newest_feedback`, Object.assign(Object.assign({}, config), { params: Object.assign({}, rest) }));
+        return resp.data;
+    });
+}
+exports.getScheduleNewestFeedbackById = getScheduleNewestFeedbackById;
+exports.GET_SCHEDULE_NEWEST_FEEDBACK_BY_ID_QUERY_KEY = `getScheduleNewestFeedbackByOperator`;
+function useGetScheduleNewestFeedbackById(request, options) {
+    const { axiosClient } = (0, core_1.useCmsApiClient)();
+    return (0, react_query_1.useQuery)([exports.GET_SCHEDULE_NEWEST_FEEDBACK_BY_ID_QUERY_KEY, request], () => getScheduleNewestFeedbackById(axiosClient, request, options === null || options === void 0 ? void 0 : options.config), options === null || options === void 0 ? void 0 : options.queryOptions);
+}
+exports.useGetScheduleNewestFeedbackById = useGetScheduleNewestFeedbackById;
+function getStudentAssessments(client, request, config) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const resp = yield client.get(`/v1/assessments_for_student`, Object.assign(Object.assign({}, config), { params: Object.assign(Object.assign({}, request), config === null || config === void 0 ? void 0 : config.params) }));
+        return resp.data;
+    });
+}
+exports.getStudentAssessments = getStudentAssessments;
+exports.GET_STUDENT_ASSESSMENTS_QUERY_KEY = `getStudentAssessments`;
+function useGetStudentAssessments(request, options) {
+    const { axiosClient } = (0, core_1.useCmsApiClient)();
+    return (0, react_query_1.useQuery)([exports.GET_STUDENT_ASSESSMENTS_QUERY_KEY, request], () => getStudentAssessments(axiosClient, request, options === null || options === void 0 ? void 0 : options.config), options === null || options === void 0 ? void 0 : options.queryOptions);
+}
+exports.useGetStudentAssessments = useGetStudentAssessments;

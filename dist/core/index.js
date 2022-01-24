@@ -54,7 +54,9 @@ const CmsApiClientContext = (0, react_1.createContext)({
         getLiveTokenByScheduleId: () => { throw new CmsApiClientNoProviderError(); },
         postSchedulesTimeViewList: () => { throw new CmsApiClientNoProviderError(); },
         postAddScheduleFeedback: () => { throw new CmsApiClientNoProviderError(); },
+        getScheduleNewestFeedbackById: () => { throw new CmsApiClientNoProviderError(); },
         getContentResourcePathById: () => { throw new CmsApiClientNoProviderError(); },
+        getStudentAssessments: () => { throw new CmsApiClientNoProviderError(); },
     },
 });
 function CmsApiClientProvider(props) {
@@ -86,8 +88,14 @@ function CmsApiClientProvider(props) {
     const postAddScheduleFeedbackAction = (0, react_1.useCallback)((request, options) => {
         return (0, schedule_1.postScheduleFeedback)(axiosClient, request, options === null || options === void 0 ? void 0 : options.config);
     }, [axiosClient]);
+    const getScheduleNewestFeedbackByIdAction = (0, react_1.useCallback)((request, options) => {
+        return (0, schedule_1.getScheduleNewestFeedbackById)(axiosClient, request, options === null || options === void 0 ? void 0 : options.config);
+    }, [axiosClient]);
     const getContentResourcePathByIdAction = (0, react_1.useCallback)((request, options) => {
         return (0, content_1.getContentResourcePathById)(axiosClient, request, options === null || options === void 0 ? void 0 : options.config);
+    }, [axiosClient]);
+    const getStudentAssessmentsAction = (0, react_1.useCallback)((request, options) => {
+        return (0, schedule_1.getStudentAssessments)(axiosClient, request, options === null || options === void 0 ? void 0 : options.config);
     }, [axiosClient]);
     const actions = (0, react_1.useMemo)(() => {
         return {
@@ -95,14 +103,18 @@ function CmsApiClientProvider(props) {
             getLiveTokenByScheduleId: getLiveTokenByScheduleIdAction,
             postSchedulesTimeViewList: postSchedulesTimeViewListAction,
             postAddScheduleFeedback: postAddScheduleFeedbackAction,
+            getScheduleNewestFeedbackById: getScheduleNewestFeedbackByIdAction,
             getContentResourcePathById: getContentResourcePathByIdAction,
+            getStudentAssessments: getStudentAssessmentsAction,
         };
     }, [
         getScheduleByIdAction,
         getLiveTokenByScheduleIdAction,
         postSchedulesTimeViewListAction,
         postAddScheduleFeedbackAction,
+        getScheduleNewestFeedbackByIdAction,
         getContentResourcePathByIdAction,
+        getStudentAssessmentsAction,
     ]);
     return (react_1.default.createElement(CmsApiClientContext.Provider, { value: {
             queryClient,

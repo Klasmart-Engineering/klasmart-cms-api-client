@@ -9,6 +9,7 @@ export declare type ScheduleRepeatType = `daily` | `weekly` | `monthly` | `yearl
 export declare type ScheduleViewType = `day` | `work_week` | `week` | `month` | `year` | `full_view`;
 export declare type ScheduleLiveTokenType = `live` | `preview`;
 export declare type TimeBoundary = `intersect` | `union`;
+export declare type AssessmentSearchType = `home_fun_study`;
 export interface FeedbackAssignmentView {
     attachment_id: string;
     attachment_name: string;
@@ -45,14 +46,52 @@ export interface SchedulesTimeViewListItem {
     status: ScheduleStatus;
     title: string;
 }
+export interface ScheduleAccessibleUserView {
+    enable: boolean;
+    id: string;
+    name: string;
+    type: string;
+}
+export interface StudentAttachment {
+    id: string;
+    name: string;
+}
+export interface StudentSchedule {
+    attachment: StudentAttachment;
+    id: string;
+    title: string;
+    type: ScheduleClassType;
+}
+export interface TeacherProfile {
+    avatar: string;
+    family_name: string;
+    given_name: string;
+    id: string;
+}
+export interface TeacherComment {
+    comment: string;
+    teacher: TeacherProfile;
+}
+export interface StudentAssessment {
+    complete_at: number;
+    create_at: number;
+    id: string;
+    schedule: StudentSchedule;
+    score: number;
+    status: AssessmentStatus;
+    student_attachments: StudentAttachment[];
+    teacher_comments: TeacherComment[];
+    title: string;
+    update_at: number;
+}
 export interface GetScheduleByIdRequest extends BaseRequest {
     schedule_id: string;
 }
 export interface GetScheduleByIdResponse {
     attachment: ForeignIdName;
     class: ForeignIdName;
-    class_roster_student: any;
-    class_roster_teacher: any;
+    class_roster_students: ScheduleAccessibleUserView[] | null;
+    class_roster_teachers: ScheduleAccessibleUserView[] | null;
     class_type: ScheduleClassType;
     description: string;
     due_at: number;
@@ -67,8 +106,8 @@ export interface GetScheduleByIdResponse {
     lesson_plan: ForeignIdName;
     member_teachers: ForeignIdName[];
     org_id: string;
-    participants_student: any;
-    participants_teacher: any;
+    participants_students: ScheduleAccessibleUserView[] | null;
+    participants_teachers: ScheduleAccessibleUserView[] | null;
     program: ForeignIdName;
     real_time_status: {
         id: string;
@@ -136,3 +175,45 @@ export interface PostScheduleFeedbackResponse {
 export declare function postScheduleFeedback(client: AxiosInstance, request: PostScheduleFeedbackRequest, config?: AxiosRequestConfig): Promise<PostScheduleFeedbackResponse>;
 export declare const POST_SCHEDULE_FEEDBACK_MUTATION_KEY: MutationKey;
 export declare function usePostScheduleFeedback(request?: PostScheduleFeedbackRequest, options?: RequestConfigMutationOptions<PostScheduleFeedbackResponse, PostScheduleFeedbackRequest>): import("react-query").UseMutationResult<PostScheduleFeedbackResponse, unknown, PostScheduleFeedbackRequest, unknown>;
+export interface GetScheduleNewestFeedbackByIdRequest extends BaseRequest {
+    schedule_id: string;
+}
+export interface GetScheduleNewestFeedbackByIdResponse {
+    assignments: {
+        attachment_id: string;
+        attachment_name: string;
+        number: number;
+    }[];
+    comment: string;
+    create_at: number;
+    id: string;
+    is_allow_submit: boolean;
+    schedule_id: string;
+    user_id: string;
+}
+export declare function getScheduleNewestFeedbackById(client: AxiosInstance, request: GetScheduleNewestFeedbackByIdRequest, config?: AxiosRequestConfig): Promise<GetScheduleNewestFeedbackByIdResponse>;
+export declare const GET_SCHEDULE_NEWEST_FEEDBACK_BY_ID_QUERY_KEY: QueryKey;
+export declare function useGetScheduleNewestFeedbackById(request: GetScheduleNewestFeedbackByIdRequest, options?: RequestConfigQueryOptions<GetScheduleNewestFeedbackByIdResponse>): import("react-query").UseQueryResult<GetScheduleNewestFeedbackByIdResponse, unknown>;
+export interface GetStudentAssessmentsRequest extends BaseRequest {
+    type: AssessmentSearchType;
+    status?: string;
+    order_by?: string;
+    teacher_id?: string;
+    assessment_id?: string;
+    schedule_ids?: string;
+    create_at_ge?: number;
+    create_at_le?: number;
+    update_at_ge?: number;
+    update_at_le?: number;
+    complete_at_ge?: number;
+    complete_at_le?: number;
+    page?: number;
+    page_size?: number;
+}
+export interface GetStudentAssessmentsResponse {
+    list: StudentAssessment[];
+    total: number;
+}
+export declare function getStudentAssessments(client: AxiosInstance, request: GetStudentAssessmentsRequest, config?: AxiosRequestConfig): Promise<GetStudentAssessmentsResponse>;
+export declare const GET_STUDENT_ASSESSMENTS_QUERY_KEY: QueryKey;
+export declare function useGetStudentAssessments(request: GetStudentAssessmentsRequest, options?: RequestConfigQueryOptions<GetStudentAssessmentsResponse>): import("react-query").UseQueryResult<GetStudentAssessmentsResponse, unknown>;

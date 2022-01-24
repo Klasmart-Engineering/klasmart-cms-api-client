@@ -9,6 +9,12 @@ import {
     getScheduleById,
     GetScheduleByIdRequest,
     GetScheduleByIdResponse,
+    getScheduleNewestFeedbackById,
+    GetScheduleNewestFeedbackByIdRequest,
+    GetScheduleNewestFeedbackByIdResponse,
+    getStudentAssessments,
+    GetStudentAssessmentsRequest,
+    GetStudentAssessmentsResponse,
     postScheduleFeedback,
     PostScheduleFeedbackRequest,
     PostScheduleFeedbackResponse,
@@ -46,7 +52,9 @@ interface CmsApiActions {
     getLiveTokenByScheduleId: (request: GetLiveTokenByScheduleIdRequest, options?: RequestConfigOptions) => Promise<GetLiveTokenByScheduleIdResponse>;
     postSchedulesTimeViewList: (request: PostSchedulesTimeViewListRequest, options?: RequestConfigOptions) => Promise<PostSchedulesTimeViewListResponse>;
     postAddScheduleFeedback: (request: PostScheduleFeedbackRequest, options?: RequestConfigOptions) => Promise<PostScheduleFeedbackResponse>;
+    getScheduleNewestFeedbackById: (request: GetScheduleNewestFeedbackByIdRequest, options?: RequestConfigOptions) => Promise<GetScheduleNewestFeedbackByIdResponse>;
     getContentResourcePathById: (request: GetContentResourcePathRequest, options?: RequestConfigOptions) => Promise<Blob>;
+    getStudentAssessments: (request: GetStudentAssessmentsRequest, options?: RequestConfigOptions) => Promise<GetStudentAssessmentsResponse>;
 }
 
 interface CmsApiClient {
@@ -85,7 +93,9 @@ const CmsApiClientContext = createContext<CmsApiClient>({
         getLiveTokenByScheduleId: () => { throw new CmsApiClientNoProviderError(); },
         postSchedulesTimeViewList: () => { throw new CmsApiClientNoProviderError(); },
         postAddScheduleFeedback: () => { throw new CmsApiClientNoProviderError(); },
+        getScheduleNewestFeedbackById: () => { throw new CmsApiClientNoProviderError(); },
         getContentResourcePathById: () => { throw new CmsApiClientNoProviderError(); },
+        getStudentAssessments: () => { throw new CmsApiClientNoProviderError(); },
     },
 });
 
@@ -140,8 +150,16 @@ export function CmsApiClientProvider (props: ProviderProps) {
         return postScheduleFeedback(axiosClient, request, options?.config);
     }, [ axiosClient ]);
 
+    const getScheduleNewestFeedbackByIdAction = useCallback((request: GetScheduleNewestFeedbackByIdRequest, options?: RequestConfigOptions) => {
+        return getScheduleNewestFeedbackById(axiosClient, request, options?.config);
+    }, [ axiosClient ]);
+
     const getContentResourcePathByIdAction = useCallback((request: GetContentResourcePathRequest, options?: RequestConfigOptions) => {
         return getContentResourcePathById(axiosClient, request, options?.config);
+    }, [ axiosClient ]);
+
+    const getStudentAssessmentsAction = useCallback((request: GetStudentAssessmentsRequest, options?: RequestConfigOptions) => {
+        return getStudentAssessments(axiosClient, request, options?.config);
     }, [ axiosClient ]);
 
     const actions = useMemo(() => {
@@ -150,14 +168,18 @@ export function CmsApiClientProvider (props: ProviderProps) {
             getLiveTokenByScheduleId: getLiveTokenByScheduleIdAction,
             postSchedulesTimeViewList: postSchedulesTimeViewListAction,
             postAddScheduleFeedback: postAddScheduleFeedbackAction,
+            getScheduleNewestFeedbackById: getScheduleNewestFeedbackByIdAction,
             getContentResourcePathById: getContentResourcePathByIdAction,
+            getStudentAssessments: getStudentAssessmentsAction,
         };
     }, [
         getScheduleByIdAction,
         getLiveTokenByScheduleIdAction,
         postSchedulesTimeViewListAction,
         postAddScheduleFeedbackAction,
+        getScheduleNewestFeedbackByIdAction,
         getContentResourcePathByIdAction,
+        getStudentAssessmentsAction,
     ]);
 
     return (
