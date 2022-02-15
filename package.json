@@ -1,5 +1,5 @@
 {
-  "name": "@kidsloop/cms-api-client",
+  "name": "@KL-Engineering/cms-api-client",
   "version": "1.2.0",
   "description": "KidsLoop CMS API client",
   "scripts": {
@@ -10,7 +10,7 @@
   "types": "dist/main.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org:calmisland/kidsloop-cms-api-client.git"
+    "url": "git+https://github.com/KL-Engineering/kidsloop-cms-api-client.git"
   },
   "author": "Henrik Wassdahl",
   "license": "ISC",
@@ -19,7 +19,7 @@
   },
   "homepage": "https://bitbucket.org/calmisland/kidsloop-cms-api-client#readme",
   "devDependencies": {
-    "@kidsloop/eslint-config": "bitbucket:calmisland/kidsloop-eslint-config#1.2.0",
+    "@kl-engineering/eslint-config": "1.4.1",
     "@testing-library/jest-dom": "5.15.0",
     "@testing-library/react-hooks": "7.0.2",
     "@types/jest": "27.0.2",
@@ -39,5 +39,8 @@
   "dependencies": {
     "axios": "0.24.0",
     "react-query": "3.32.1"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
