@@ -4,6 +4,8 @@
 name: Node.js Package
 
 on:
+  workflow_dispatch:
+    branches: [james-wilson-kidsloop-actions-dev]
   release:
     types: [created]
 
