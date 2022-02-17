@@ -15,13 +15,13 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_NPM_GITHUB_REPO }}
       - run: npm install npm@latest -g
       - run: npm i --legacy-peer-deps
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          NPM_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          NPM_GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.PAT_NPM_GITHUB_REPO}}
+          NPM_TOKEN: ${{secrets.PAT_NPM_GITHUB_REPO}}
+          NPM_GITHUB_TOKEN: ${{secrets.PAT_NPM_GITHUB_REPO}}
 
 
   publish-gpr:
@@ -35,12 +35,12 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_NPM_GITHUB_REPO }}
           registry-url: https://npm.pkg.github.com/
       - run: npm install npm@latest -g
       - run: npm i --legacy-peer-deps
       - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          NPM_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          NPM_GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.PAT_NPM_GITHUB_REPO}}
+          NPM_TOKEN: ${{secrets.PAT_NPM_GITHUB_REPO}}
+          NPM_GITHUB_TOKEN: ${{secrets.PAT_NPM_GITHUB_REPO}}
