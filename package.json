@@ -4,7 +4,7 @@
   "description": "KidsLoop CMS API client",
   "scripts": {
     "build": "tsc",
-    "release": "standard-version -t '' -a",
+    "release": "standard-version -t '' -a && git push --follow-tags origin main",
     "lint": "eslint .",
     "prepare": "husky install"
   },

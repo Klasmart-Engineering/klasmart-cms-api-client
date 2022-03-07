@@ -63,9 +63,7 @@
     "AD-",
     "DT-"
   ],
-  "standard-version": {
-    "scripts": {
-      "prerelease": "npm run build && git add ."
-    }
+  "scripts": {
+    "prerelease": "npm run build && git add ."
   }
 }
