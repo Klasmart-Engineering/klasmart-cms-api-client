@@ -40,7 +40,6 @@
         "node_modules",
         "dist",
         "src/**/*.test.ts",
-        "src/**/*.test.tsx",
-        "tsconfig.json"
+        "src/**/*.test.tsx"
     ]
 }

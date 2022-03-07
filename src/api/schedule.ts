@@ -302,7 +302,7 @@ export async function getScheduleNewestFeedbackById (client: AxiosInstance, requ
         ...config,
         params: {
             ...rest,
-        }
+        },
     });
     return resp.data;
 }
