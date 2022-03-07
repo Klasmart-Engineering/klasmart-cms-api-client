@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://bitbucket.org/calmisland/kidsloop-cms-api-client/branches/compare/2.0.0%0D1.2.3) (2022-03-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* update interceptors
+
+### ✨ Features
+
+* update interceptors ([40309fc](https://bitbucket.org/calmisland/kidsloop-cms-api-client/commits/40309fc44b6599bfe2411204c4f6700059134801))
+
 ### [1.2.3](https://bitbucket.org/calmisland/kidsloop-cms-api-client/branches/compare/1.2.3%0D1.2.2) (2022-03-07)
 
 ### [1.2.2](https://bitbucket.org/calmisland/kidsloop-cms-api-client/branches/compare/1.2.2%0D1.2.1) (2022-03-07)
