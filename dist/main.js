@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReactQueryDevtools = exports.useQueryClient = exports.useCmsApiClient = exports.CmsApiClientProvider = exports.usePostSchedulesTimeViewList = exports.usePostScheduleFeedback = exports.useGetScheduleNewestFeedbackById = exports.useGetScheduleById = exports.useGetLiveTokenByScheduleId = exports.useGetContentResourcePathById = exports.useGetStudentAssessments = exports.useGetAssessmentsSummary = void 0;
+exports.ReactQueryDevtools = exports.useQueryClient = exports.useCmsApiClient = exports.CmsApiClientProvider = exports.usePostSchedulesTimeViewList = exports.usePostScheduleFeedback = exports.useGetScheduleNewestFeedbackById = exports.useGetScheduleById = exports.useGetLiveTokenByScheduleId = exports.useGetContentResourcePathById = exports.useGetStudentAssessments = exports.useGetAssessmentsSummary = exports.useGetAssessments = void 0;
 var assessment_1 = require("./api/assessment");
+Object.defineProperty(exports, "useGetAssessments", { enumerable: true, get: function () { return assessment_1.useGetAssessments; } });
 Object.defineProperty(exports, "useGetAssessmentsSummary", { enumerable: true, get: function () { return assessment_1.useGetAssessmentsSummary; } });
 Object.defineProperty(exports, "useGetStudentAssessments", { enumerable: true, get: function () { return assessment_1.useGetStudentAssessments; } });
 var content_1 = require("./api/content");

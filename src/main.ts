@@ -1,11 +1,14 @@
 export {
+    AssessmentItem,
     AssessmentSearchType,
+    AssessmentsOrder,
     AssessmentStatus,
     StudentAssessment,
     StudentAttachment,
     StudentSchedule,
     TeacherComment,
     TeacherProfile,
+    useGetAssessments,
     useGetAssessmentsSummary,
     useGetStudentAssessments,
 } from "./api/assessment";

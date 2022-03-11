@@ -59,6 +59,7 @@ const CmsApiClientContext = (0, react_1.createContext)({
         getContentResourcePathById: () => { throw new CmsApiClientNoProviderError(); },
         getStudentAssessments: () => { throw new CmsApiClientNoProviderError(); },
         getAssessmentsSummary: () => { throw new CmsApiClientNoProviderError(); },
+        getAssessments: () => { throw new CmsApiClientNoProviderError(); },
     },
 });
 function CmsApiClientProvider(props) {
@@ -109,6 +110,9 @@ function CmsApiClientProvider(props) {
     const getAssessmentsSummaryAction = (0, react_1.useCallback)((request, options) => {
         return (0, assessment_1.getAssessmentsSummary)(axiosClient, request, options === null || options === void 0 ? void 0 : options.config);
     }, [axiosClient]);
+    const getAssessmentsAction = (0, react_1.useCallback)((request, options) => {
+        return (0, assessment_1.getAssessments)(axiosClient, request, options === null || options === void 0 ? void 0 : options.config);
+    }, [axiosClient]);
     const actions = (0, react_1.useMemo)(() => {
         return {
             getScheduleById: getScheduleByIdAction,
@@ -119,6 +123,7 @@ function CmsApiClientProvider(props) {
             getContentResourcePathById: getContentResourcePathByIdAction,
             getStudentAssessments: getStudentAssessmentsAction,
             getAssessmentsSummary: getAssessmentsSummaryAction,
+            getAssessments: getAssessmentsAction,
         };
     }, [
         getScheduleByIdAction,
@@ -129,6 +134,7 @@ function CmsApiClientProvider(props) {
         getContentResourcePathByIdAction,
         getStudentAssessmentsAction,
         getAssessmentsSummaryAction,
+        getAssessmentsAction,
     ]);
     return (react_1.default.createElement(CmsApiClientContext.Provider, { value: {
             queryClient,

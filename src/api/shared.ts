@@ -4,7 +4,7 @@ import {
     UseQueryOptions,
 } from "react-query";
 
-export type ForeignIdName = {
+export interface ForeignIdName {
     id: string;
     name: string;
 }

@@ -1,9 +1,9 @@
 import { AxiosRequestConfig } from "axios";
 import { UseMutationOptions, UseQueryOptions } from "react-query";
-export declare type ForeignIdName = {
+export interface ForeignIdName {
     id: string;
     name: string;
-};
+}
 export interface RequestConfigOptions {
     config?: AxiosRequestConfig;
 }

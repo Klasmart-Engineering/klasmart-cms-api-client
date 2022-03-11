@@ -2,6 +2,7 @@ import { useCmsApiClient } from "../core";
 import { ScheduleClassType } from "./schedule";
 import {
     BaseRequest,
+    ForeignIdName,
     RequestConfigQueryOptions,
 } from "./shared";
 import {
@@ -15,6 +16,7 @@ import {
 
 export type AssessmentStatus = `complete` | `in_progress`;
 export type AssessmentSearchType = `home_fun_study`;
+export type AssessmentsOrder = `class_end_time` | `-class_end_time` | `complete_time` | `-complete_time`;
 
 export interface StudentAttachment {
     id: string;
@@ -53,6 +55,48 @@ export interface StudentAssessment {
     update_at: number;
 }
 
+export interface AssessmentItem {
+    id: string;
+    title: string;
+    subject: ForeignIdName;
+    program: ForeignIdName;
+    teachers: ForeignIdName[] | null;
+    class_end_time: number;
+    complete_time: number;
+    status: AssessmentStatus;
+}
+
+export interface GetAssessmentsRequest extends BaseRequest {
+    page?: number;
+    page_size?: number;
+    status?: string;
+    teacher_name?: string;
+    class_type?: string;
+    order_by?: AssessmentsOrder;
+}
+
+export interface GetAssessmentsResponse {
+    items: AssessmentItem[];
+    total: number;
+}
+
+export async function getAssessments (client: AxiosInstance, request: GetAssessmentsRequest, config?: AxiosRequestConfig) {
+    const resp = await client.get<GetAssessmentsResponse>(`/v1/assessments`, {
+        ...config,
+        params: {
+            ...request,
+            ...config?.params,
+        },
+    });
+    return resp.data;
+}
+
+export const GET_ASSESSMENTS_QUERY_KEY: QueryKey = `getAssessments`;
+
+export function useGetAssessments (request: GetAssessmentsRequest, options?: RequestConfigQueryOptions<GetAssessmentsResponse>) {
+    const { axiosClient } = useCmsApiClient();
+    return useQuery([ GET_ASSESSMENTS_QUERY_KEY, request ], () => getAssessments(axiosClient, request, options?.config), options?.queryOptions);
+}
 export interface GetAssessmentsSummaryRequest extends BaseRequest {
 }
 

@@ -1,4 +1,7 @@
 import {
+    getAssessments,
+    GetAssessmentsRequest,
+    GetAssessmentsResponse,
     getAssessmentsSummary,
     GetAssessmentsSummaryRequest,
     GetAssessmentsSummaryResponse,
@@ -61,6 +64,7 @@ interface CmsApiActions {
     getContentResourcePathById: (request: GetContentResourcePathRequest, options?: RequestConfigOptions) => Promise<Blob>;
     getStudentAssessments: (request: GetStudentAssessmentsRequest, options?: RequestConfigOptions) => Promise<GetStudentAssessmentsResponse>;
     getAssessmentsSummary: (request: GetAssessmentsSummaryRequest, options?: RequestConfigOptions) => Promise<GetAssessmentsSummaryResponse>;
+    getAssessments: (request: GetAssessmentsRequest, options?: RequestConfigOptions) => Promise<GetAssessmentsResponse>;
 }
 
 interface CmsApiClient {
@@ -107,6 +111,7 @@ const CmsApiClientContext = createContext<CmsApiClient>({
         getContentResourcePathById: () => { throw new CmsApiClientNoProviderError(); },
         getStudentAssessments: () => { throw new CmsApiClientNoProviderError(); },
         getAssessmentsSummary: () => { throw new CmsApiClientNoProviderError(); },
+        getAssessments: () => { throw new CmsApiClientNoProviderError(); },
     },
 });
 
@@ -186,6 +191,10 @@ export function CmsApiClientProvider (props: ProviderProps) {
         return getAssessmentsSummary(axiosClient, request, options?.config);
     }, [ axiosClient ]);
 
+    const getAssessmentsAction = useCallback((request: GetAssessmentsRequest, options?: RequestConfigOptions) => {
+        return getAssessments(axiosClient, request, options?.config);
+    }, [ axiosClient ]);
+
     const actions = useMemo(() => {
         return {
             getScheduleById: getScheduleByIdAction,
@@ -196,6 +205,7 @@ export function CmsApiClientProvider (props: ProviderProps) {
             getContentResourcePathById: getContentResourcePathByIdAction,
             getStudentAssessments: getStudentAssessmentsAction,
             getAssessmentsSummary: getAssessmentsSummaryAction,
+            getAssessments: getAssessmentsAction,
         };
     }, [
         getScheduleByIdAction,
@@ -206,6 +216,7 @@ export function CmsApiClientProvider (props: ProviderProps) {
         getContentResourcePathByIdAction,
         getStudentAssessmentsAction,
         getAssessmentsSummaryAction,
+        getAssessmentsAction,
     ]);
 
     return (
