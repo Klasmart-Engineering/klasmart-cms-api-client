@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://bitbucket.org/calmisland/kidsloop-cms-api-client/branches/compare/2.1.0%0D2.0.0) (2022-03-11)
+
+
+### ✨ Features
+
+* add get assessments ([a4cfad2](https://bitbucket.org/calmisland/kidsloop-cms-api-client/commits/a4cfad273762bd18060a2b249e9fb52c2902daf4))
+* add get assessments summary ([64d3c5d](https://bitbucket.org/calmisland/kidsloop-cms-api-client/commits/64d3c5d49d82835154ab29fd6420b47f372be57f))
+
 ## [2.0.0](https://bitbucket.org/calmisland/kidsloop-cms-api-client/branches/compare/2.0.0%0D1.2.3) (2022-03-07)
 
 
