@@ -1,4 +1,12 @@
 import {
+    getAssessmentsSummary,
+    GetAssessmentsSummaryRequest,
+    GetAssessmentsSummaryResponse,
+    getStudentAssessments,
+    GetStudentAssessmentsRequest,
+    GetStudentAssessmentsResponse,
+} from "../api/assessment";
+import {
     getContentResourcePathById,
     GetContentResourcePathRequest,
 } from "../api/content";
@@ -12,9 +20,6 @@ import {
     getScheduleNewestFeedbackById,
     GetScheduleNewestFeedbackByIdRequest,
     GetScheduleNewestFeedbackByIdResponse,
-    getStudentAssessments,
-    GetStudentAssessmentsRequest,
-    GetStudentAssessmentsResponse,
     postScheduleFeedback,
     PostScheduleFeedbackRequest,
     PostScheduleFeedbackResponse,
@@ -55,6 +60,7 @@ interface CmsApiActions {
     getScheduleNewestFeedbackById: (request: GetScheduleNewestFeedbackByIdRequest, options?: RequestConfigOptions) => Promise<GetScheduleNewestFeedbackByIdResponse>;
     getContentResourcePathById: (request: GetContentResourcePathRequest, options?: RequestConfigOptions) => Promise<Blob>;
     getStudentAssessments: (request: GetStudentAssessmentsRequest, options?: RequestConfigOptions) => Promise<GetStudentAssessmentsResponse>;
+    getAssessmentsSummary: (request: GetAssessmentsSummaryRequest, options?: RequestConfigOptions) => Promise<GetAssessmentsSummaryResponse>;
 }
 
 interface CmsApiClient {
@@ -100,6 +106,7 @@ const CmsApiClientContext = createContext<CmsApiClient>({
         getScheduleNewestFeedbackById: () => { throw new CmsApiClientNoProviderError(); },
         getContentResourcePathById: () => { throw new CmsApiClientNoProviderError(); },
         getStudentAssessments: () => { throw new CmsApiClientNoProviderError(); },
+        getAssessmentsSummary: () => { throw new CmsApiClientNoProviderError(); },
     },
 });
 
@@ -175,6 +182,10 @@ export function CmsApiClientProvider (props: ProviderProps) {
         return getStudentAssessments(axiosClient, request, options?.config);
     }, [ axiosClient ]);
 
+    const getAssessmentsSummaryAction = useCallback((request: GetAssessmentsSummaryRequest, options?: RequestConfigOptions) => {
+        return getAssessmentsSummary(axiosClient, request, options?.config);
+    }, [ axiosClient ]);
+
     const actions = useMemo(() => {
         return {
             getScheduleById: getScheduleByIdAction,
@@ -184,6 +195,7 @@ export function CmsApiClientProvider (props: ProviderProps) {
             getScheduleNewestFeedbackById: getScheduleNewestFeedbackByIdAction,
             getContentResourcePathById: getContentResourcePathByIdAction,
             getStudentAssessments: getStudentAssessmentsAction,
+            getAssessmentsSummary: getAssessmentsSummaryAction,
         };
     }, [
         getScheduleByIdAction,
@@ -193,6 +205,7 @@ export function CmsApiClientProvider (props: ProviderProps) {
         getScheduleNewestFeedbackByIdAction,
         getContentResourcePathByIdAction,
         getStudentAssessmentsAction,
+        getAssessmentsSummaryAction,
     ]);
 
     return (

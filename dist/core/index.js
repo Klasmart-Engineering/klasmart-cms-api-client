@@ -34,6 +34,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useCmsApiClient = exports.CmsApiClientProvider = void 0;
+const assessment_1 = require("../api/assessment");
 const content_1 = require("../api/content");
 const schedule_1 = require("../api/schedule");
 const axios_1 = __importDefault(require("axios"));
@@ -57,6 +58,7 @@ const CmsApiClientContext = (0, react_1.createContext)({
         getScheduleNewestFeedbackById: () => { throw new CmsApiClientNoProviderError(); },
         getContentResourcePathById: () => { throw new CmsApiClientNoProviderError(); },
         getStudentAssessments: () => { throw new CmsApiClientNoProviderError(); },
+        getAssessmentsSummary: () => { throw new CmsApiClientNoProviderError(); },
     },
 });
 function CmsApiClientProvider(props) {
@@ -102,7 +104,10 @@ function CmsApiClientProvider(props) {
         return (0, content_1.getContentResourcePathById)(axiosClient, request, options === null || options === void 0 ? void 0 : options.config);
     }, [axiosClient]);
     const getStudentAssessmentsAction = (0, react_1.useCallback)((request, options) => {
-        return (0, schedule_1.getStudentAssessments)(axiosClient, request, options === null || options === void 0 ? void 0 : options.config);
+        return (0, assessment_1.getStudentAssessments)(axiosClient, request, options === null || options === void 0 ? void 0 : options.config);
+    }, [axiosClient]);
+    const getAssessmentsSummaryAction = (0, react_1.useCallback)((request, options) => {
+        return (0, assessment_1.getAssessmentsSummary)(axiosClient, request, options === null || options === void 0 ? void 0 : options.config);
     }, [axiosClient]);
     const actions = (0, react_1.useMemo)(() => {
         return {
@@ -113,6 +118,7 @@ function CmsApiClientProvider(props) {
             getScheduleNewestFeedbackById: getScheduleNewestFeedbackByIdAction,
             getContentResourcePathById: getContentResourcePathByIdAction,
             getStudentAssessments: getStudentAssessmentsAction,
+            getAssessmentsSummary: getAssessmentsSummaryAction,
         };
     }, [
         getScheduleByIdAction,
@@ -122,6 +128,7 @@ function CmsApiClientProvider(props) {
         getScheduleNewestFeedbackByIdAction,
         getContentResourcePathByIdAction,
         getStudentAssessmentsAction,
+        getAssessmentsSummaryAction,
     ]);
     return (react_1.default.createElement(CmsApiClientContext.Provider, { value: {
             queryClient,

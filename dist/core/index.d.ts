@@ -1,5 +1,6 @@
+import { GetAssessmentsSummaryRequest, GetAssessmentsSummaryResponse, GetStudentAssessmentsRequest, GetStudentAssessmentsResponse } from "../api/assessment";
 import { GetContentResourcePathRequest } from "../api/content";
-import { GetLiveTokenByScheduleIdRequest, GetLiveTokenByScheduleIdResponse, GetScheduleByIdRequest, GetScheduleByIdResponse, GetScheduleNewestFeedbackByIdRequest, GetScheduleNewestFeedbackByIdResponse, GetStudentAssessmentsRequest, GetStudentAssessmentsResponse, PostScheduleFeedbackRequest, PostScheduleFeedbackResponse, PostSchedulesTimeViewListRequest, PostSchedulesTimeViewListResponse } from "../api/schedule";
+import { GetLiveTokenByScheduleIdRequest, GetLiveTokenByScheduleIdResponse, GetScheduleByIdRequest, GetScheduleByIdResponse, GetScheduleNewestFeedbackByIdRequest, GetScheduleNewestFeedbackByIdResponse, PostScheduleFeedbackRequest, PostScheduleFeedbackResponse, PostSchedulesTimeViewListRequest, PostSchedulesTimeViewListResponse } from "../api/schedule";
 import { RequestConfigOptions } from "../api/shared";
 import { AxiosDefaults, AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import React from "react";
@@ -12,6 +13,7 @@ interface CmsApiActions {
     getScheduleNewestFeedbackById: (request: GetScheduleNewestFeedbackByIdRequest, options?: RequestConfigOptions) => Promise<GetScheduleNewestFeedbackByIdResponse>;
     getContentResourcePathById: (request: GetContentResourcePathRequest, options?: RequestConfigOptions) => Promise<Blob>;
     getStudentAssessments: (request: GetStudentAssessmentsRequest, options?: RequestConfigOptions) => Promise<GetStudentAssessmentsResponse>;
+    getAssessmentsSummary: (request: GetAssessmentsSummaryRequest, options?: RequestConfigOptions) => Promise<GetAssessmentsSummaryResponse>;
 }
 interface CmsApiClient {
     queryClient: QueryClient;
