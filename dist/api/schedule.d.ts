@@ -9,6 +9,7 @@ export declare type ScheduleRepeatType = `daily` | `weekly` | `monthly` | `yearl
 export declare type ScheduleViewType = `day` | `work_week` | `week` | `month` | `year` | `full_view`;
 export declare type ScheduleLiveTokenType = `live` | `preview`;
 export declare type TimeBoundary = `intersect` | `union`;
+export declare type ReviewStatusType = `pending` | `success` | `failed`;
 export interface FeedbackAssignmentView {
     attachment_id: string;
     attachment_name: string;
@@ -39,6 +40,10 @@ export interface SchedulesTimeViewListItem {
     end_at: number;
     id: string;
     is_home_fun: boolean;
+    is_review: boolean;
+    content_start_at: number;
+    content_end_at: number;
+    review_status: ReviewStatusType;
     is_repeat: boolean;
     lesson_plan_id: string;
     start_at: number;
@@ -67,6 +72,10 @@ export interface GetScheduleByIdResponse {
     is_all_day: boolean;
     is_repeat: boolean;
     is_home_fun: boolean;
+    is_review: boolean;
+    content_start_at: number;
+    content_end_at: number;
+    review_status: ReviewStatusType;
     exist_feedback: boolean;
     exist_assessment: boolean;
     complete_assessment: boolean;

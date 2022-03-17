@@ -26,6 +26,7 @@ export {
     PostSchedulesTimeViewListResponse,
     RepeatEnd,
     RepeatEndType,
+    ReviewStatusType,
     ScheduleAccessibleUserView,
     ScheduleClassType,
     ScheduleLiveTokenType,
