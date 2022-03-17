@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://bitbucket.org/calmisland/kidsloop-cms-api-client/branches/compare/2.2.0%0D2.1.0) (2022-03-17)
+
+
+### ✨ Features
+
+* add new fields response to getScheduleById and postSchedulesTimeViewList API ([459ee84](https://bitbucket.org/calmisland/kidsloop-cms-api-client/commits/459ee8431e94a04f0b57340786b21cef2fa63615))
+
 ## [2.1.0](https://bitbucket.org/calmisland/kidsloop-cms-api-client/branches/compare/2.1.0%0D2.0.0) (2022-03-11)
 
 
