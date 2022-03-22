@@ -62,8 +62,5 @@
   "issuePrefixes": [
     "AD-",
     "DT-"
-  ],
-  "scripts": {
-    "prerelease": "npm run build && git add ."
-  }
+  ]
 }

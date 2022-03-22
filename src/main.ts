@@ -47,5 +47,5 @@ export {
     CmsApiClientProvider,
     useCmsApiClient,
 } from "./core";
-export { useQueryClient } from  "react-query";
+export { useQueryClient } from "react-query";
 export { ReactQueryDevtools } from 'react-query/devtools';

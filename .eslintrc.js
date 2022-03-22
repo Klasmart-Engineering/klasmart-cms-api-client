@@ -1,5 +1,8 @@
+// required to load local dependencies of kidsloop-eslint-config
+require(`@rushstack/eslint-patch/modern-module-resolution`);
+
 module.exports = {
-    extends: [ `@kidsloop/eslint-config/react`, `@kidsloop/eslint-config/jest/react` ],
+    extends: [ `@kl-engineering/eslint-config/react`, `@kl-engineering/eslint-config/jest/react` ],
     parserOptions: {
         ecmaFeatures: {
             jsx: true,

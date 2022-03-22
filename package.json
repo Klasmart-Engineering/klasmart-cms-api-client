@@ -5,7 +5,7 @@
   "description": "KidsLoop CMS API client",
   "scripts": {
     "build": "tsc",
-    "release": "standard-version -t '' -a && git push --follow-tags origin main",
+    "release": "standard-version",
     "lint": "eslint .",
     "prepare": "husky install"
   },
@@ -13,29 +13,30 @@
   "types": "dist/main.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org:calmisland/kidsloop-cms-api-client.git"
+    "url": "git+https://github.com/KL-Engineering/kidsloop-cms-api-client.git"
   },
   "author": "Henrik Wassdahl",
   "license": "ISC",
   "bugs": {
-    "url": "https://bitbucket.org/calmisland/kidsloop-cms-api-client/issues"
+    "url": "https://github.com/KL-Engineering/kidsloop-cms-api-client/issues"
   },
-  "homepage": "https://bitbucket.org/calmisland/kidsloop-cms-api-client#readme",
+  "homepage": "https://github.com/KL-Engineering/kidsloop-cms-api-client#readme",
   "devDependencies": {
     "@commitlint/cli": "16.2.1",
     "@commitlint/config-conventional": "16.2.1",
-    "@kidsloop/eslint-config": "bitbucket:calmisland/kidsloop-eslint-config#1.2.0",
+    "@kl-engineering/eslint-config": "2.0.3",
+    "@rushstack/eslint-patch": "1.1.1",
     "@testing-library/jest-dom": "5.15.0",
     "@testing-library/react-hooks": "7.0.2",
     "@types/jest": "27.0.2",
     "@types/testing-library__jest-dom": "5.14.1",
-    "eslint": "7.32.0",
+    "eslint": "8.11.0",
     "husky": "^7.0.0",
     "jest": "27.3.1",
     "standard-version": "9.3.2",
     "ts-jest": "27.0.7",
     "ts-node": "10.4.0",
-    "typescript": "4.4.4"
+    "typescript": "4.6.2"
   },
   "peerDependencies": {
     "axios": "0.24.0",
@@ -46,5 +47,8 @@
   "dependencies": {
     "axios": "0.24.0",
     "react-query": "3.32.1"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

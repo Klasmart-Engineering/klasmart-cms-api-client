@@ -220,12 +220,14 @@ export function CmsApiClientProvider (props: ProviderProps) {
     ]);
 
     return (
-        <CmsApiClientContext.Provider value={{
-            queryClient,
-            axiosClient,
-            updateHttpConfig,
-            actions,
-        }}>
+        <CmsApiClientContext.Provider
+            value={{
+                queryClient,
+                axiosClient,
+                updateHttpConfig,
+                actions,
+            }}
+        >
             <QueryClientProvider {...updatedProps}>
                 {children}
             </QueryClientProvider>
