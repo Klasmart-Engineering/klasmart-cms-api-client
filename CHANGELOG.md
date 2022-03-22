@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.3](https://github.com/KL-Engineering/kidsloop-cms-api-client/branches/compare/v2.2.3%0Dv2.2.2) (2022-03-22)
+
 ### [2.2.2](https://github.com/KL-Engineering/kidsloop-cms-api-client/branches/compare/v2.2.2%0Dv2.2.1) (2022-03-22)
 
 ### [2.2.1](https://github.com/KL-Engineering/kidsloop-cms-api-client/branches/compare/v2.2.1%0Dv2.2.0) (2022-03-22)

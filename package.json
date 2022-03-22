@@ -1,6 +1,6 @@
 {
   "name": "@kl-engineering/cms-api-client",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "KidsLoop CMS API client",
   "scripts": {
     "build": "tsc",
