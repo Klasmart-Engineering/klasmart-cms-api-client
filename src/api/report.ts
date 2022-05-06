@@ -42,20 +42,15 @@ export interface GetAssignmentsResponse {
 }
 
 export async function getAssignmentClassesSummary (client: AxiosInstance, request: GetAssignmentsRequest, config?: AxiosRequestConfig) {
-    let resp;
-    try {
-        resp = await client.get<GetAssignmentsResponse>(`/v1/reports/learning_summary/assignments_v2`, {
-            ...config,
-            params: {
-                ...request,
-                ...config?.params,
-            },
-        });
+    const resp = await client.get<GetAssignmentsResponse>(`/v1/reports/learning_summary/assignments_v2`, {
+        ...config,
+        params: {
+            ...request,
+            ...config?.params,
+        },
+    });
 
-        return resp.data;
-    } catch (error) {
-        throw new Error(`error ${error}`);
-    }
+    return resp.data;
 }
 
 export const GET_ASSIGNMENTS_ID_MUTATION_KEY: QueryKey = `assignmentsClassesSummary`;
@@ -95,20 +90,15 @@ export interface GetLiveClassesSummaryResponse {
 }
 
 export async function getLiveClassesSummary (client: AxiosInstance, request: GetLiveClassesSummaryRequest, config?: AxiosRequestConfig) {
-    let resp;
-    try {
-        resp = await client.get<GetLiveClassesSummaryResponse>(`/v1/reports/learning_summary/live_classes_v2`, {
-            ...config,
-            params: {
-                ...request,
-                ...config?.params,
-            },
-        });
+    const resp = await client.get<GetLiveClassesSummaryResponse>(`/v1/reports/learning_summary/live_classes_v2`, {
+        ...config,
+        params: {
+            ...request,
+            ...config?.params,
+        },
+    });
 
-        return resp.data;
-    } catch (error) {
-        throw new Error(`error ${error}`);
-    }
+    return resp.data;
 }
 
 export const GET_LIVE_CLASSES_SUMMARY_ID_MUTATION_KEY: QueryKey = `liveClassesSummary`;
@@ -131,20 +121,15 @@ export interface GetLearningOutComesResponse {
 }
 
 export async function getLearningOutcomes (client: AxiosInstance, request: GetLearningOutComesRequest, config?: AxiosRequestConfig) {
-    let resp;
-    try {
-        resp = await client.get<[GetLearningOutComesResponse]>(`/v1/reports/learning_summary/outcomes`, {
-            ...config,
-            params: {
-                ...request,
-                ...config?.params,
-            },
-        });
+    const resp = await client.get<[GetLearningOutComesResponse]>(`/v1/reports/learning_summary/outcomes`, {
+        ...config,
+        params: {
+            ...request,
+            ...config?.params,
+        },
+    });
 
-        return resp.data;
-    } catch (error) {
-        throw new Error(`error ${error}`);
-    }
+    return resp.data;
 }
 
 export const GET_LEARNING_OUTCOMES_ID_MUTATION_KEY: QueryKey = `learningOutComes`;
@@ -200,20 +185,15 @@ export interface GetAppInsightMessagesResponse {
 }
 
 export async function getAppInsightMessage (client: AxiosInstance, request: GetAppInsightMessagesRequest, config?: AxiosRequestConfig) {
-    let resp;
-    try {
-        resp = await client.get<GetAppInsightMessagesResponse>(`/v1/reports/student_progress/app/insight_message`, {
-            ...config,
-            params: {
-                ...request,
-                ...config?.params,
-            },
-        });
+    const resp = await client.get<GetAppInsightMessagesResponse>(`/v1/reports/student_progress/app/insight_message`, {
+        ...config,
+        params: {
+            ...request,
+            ...config?.params,
+        },
+    });
 
-        return resp.data;
-    } catch (error) {
-        throw new Error(`error ${error}`);
-    }
+    return resp.data;
 }
 
 export const GET_INSIGTH_MESSAGE_ID_MUTATION_KEY: QueryKey = `getAppInsightMessage`;
