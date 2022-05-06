@@ -1,4 +1,7 @@
 import {
+    getAssessmentById,
+    GetAssessmentByIdRequest,
+    GetAssessmentByIdResponse,
     getAssessments,
     GetAssessmentsRequest,
     GetAssessmentsResponse,
@@ -79,6 +82,7 @@ interface CmsApiActions {
     getStudentAssessments: (request: GetStudentAssessmentsRequest, options?: RequestConfigOptions) => Promise<GetStudentAssessmentsResponse>;
     getAssessmentsSummary: (request: GetAssessmentsSummaryRequest, options?: RequestConfigOptions) => Promise<GetAssessmentsSummaryResponse>;
     getAssessments: (request: GetAssessmentsRequest, options?: RequestConfigOptions) => Promise<GetAssessmentsResponse>;
+    getAssessmentById: (request: GetAssessmentByIdRequest, options?: RequestConfigOptions) => Promise<GetAssessmentByIdResponse>;
     getLiveClassesSummary: (request: GetLiveClassesSummaryRequest, options?: RequestConfigOptions) => Promise<GetLiveClassesSummaryResponse>;
     getAssignmentClassesSummary: (request: GetAssignmentsRequest, options?: RequestConfigOptions) => Promise<GetAssignmentsResponse>;
     getLearningOutcomes: (request: GetLearningOutComesRequest, options?: RequestConfigOptions) => Promise<[GetLearningOutComesResponse]>;
@@ -130,6 +134,7 @@ const CmsApiClientContext = createContext<CmsApiClient>({
         getStudentAssessments: () => { throw new CmsApiClientNoProviderError(); },
         getAssessmentsSummary: () => { throw new CmsApiClientNoProviderError(); },
         getAssessments: () => { throw new CmsApiClientNoProviderError(); },
+        getAssessmentById: () => { throw new CmsApiClientNoProviderError(); },
         getLiveClassesSummary: () => { throw new CmsApiClientNoProviderError(); },
         getAssignmentClassesSummary: () => { throw new CmsApiClientNoProviderError(); },
         getLearningOutcomes: () => { throw new CmsApiClientNoProviderError(); },
@@ -213,6 +218,10 @@ export function CmsApiClientProvider (props: ProviderProps) {
         return getAssessmentsSummary(axiosClient, request, options?.config);
     }, [ axiosClient ]);
 
+    const getAssessmentByIdAction = useCallback((request: GetAssessmentByIdRequest, options?: RequestConfigOptions) => {
+        return getAssessmentById(axiosClient, request, options?.config);
+    }, [ axiosClient ]);
+
     const getAssessmentsAction = useCallback((request: GetAssessmentsRequest, options?: RequestConfigOptions) => {
         return getAssessments(axiosClient, request, options?.config);
     }, [ axiosClient ]);
@@ -244,6 +253,7 @@ export function CmsApiClientProvider (props: ProviderProps) {
             getStudentAssessments: getStudentAssessmentsAction,
             getAssessmentsSummary: getAssessmentsSummaryAction,
             getAssessments: getAssessmentsAction,
+            getAssessmentById: getAssessmentByIdAction,
             getLiveClassesSummary: getLiveClassesSummaryAction,
             getAssignmentClassesSummary: getAssignmentClassesSummaryAction,
             getLearningOutcomes: getLearningOutcomesAction,
@@ -259,6 +269,7 @@ export function CmsApiClientProvider (props: ProviderProps) {
         getStudentAssessmentsAction,
         getAssessmentsSummaryAction,
         getAssessmentsAction,
+        getAssessmentByIdAction,
         getLiveClassesSummaryAction,
         getAssignmentClassesSummaryAction,
         getLearningOutcomesAction,

@@ -13,32 +13,32 @@ import {
 } from "react-query";
 
 export interface GetAssignmentsRequest extends BaseRequest {
-  year: number;
-  week_start: number;
-  week_end: number;
-  school_id?: string;
-  class_id: string;
-  teacher_id?: string;
-  student_id: string;
-  subject_id?: string;
+    year: number;
+    week_start: number;
+    week_end: number;
+    school_id?: string;
+    class_id: string;
+    teacher_id?: string;
+    student_id: string;
+    subject_id?: string;
 }
 
 export interface GetAssignmentsItem {
-  assessment_id: string;
-  assessment_title: string;
-  assessment_type: string;
-  complete_at: number;
-  create_at: number;
-  lesson_plan_name: string;
-  schedule_id: string;
-  status: string;
-  teacher_feedback: string;
+    assessment_id: string;
+    assessment_title: string;
+    assessment_type: string;
+    complete_at: number;
+    create_at: number;
+    lesson_plan_name: string;
+    schedule_id: string;
+    status: string;
+    teacher_feedback: string;
 }
 
 export interface GetAssignmentsResponse {
-  home_fun_study_count: number;
-  items: [GetAssignmentsItem];
-  study_count: number;
+    home_fun_study_count: number;
+    items: GetAssignmentsItem[];
+    study_count: number;
 }
 
 export async function getAssignmentClassesSummary (client: AxiosInstance, request: GetAssignmentsRequest, config?: AxiosRequestConfig) {
@@ -67,31 +67,31 @@ export function useGetAssignmentClassesSummary (request: GetAssignmentsRequest, 
 }
 
 export interface GetLiveClassesSummaryRequest extends BaseRequest {
-  year: number;
-  week_start: number;
-  week_end: number;
-  school_id?: string;
-  class_id: string;
-  teacher_id?: string;
-  student_id: string;
-  subject_id?: string;
+    year: number;
+    week_start: number;
+    week_end: number;
+    school_id?: string;
+    class_id: string;
+    teacher_id?: string;
+    student_id: string;
+    subject_id?: string;
 }
 
 export interface GetLiveClassesItem {
-  absent: boolean;
-  assessment_id: string;
-  class_start_time: number;
-  complete_at: number;
-  create_at: number;
-  lesson_plan_name: string;
-  schedule_id: string;
-  schedule_title: string;
-  teacher_feedback: string;
+    absent: boolean;
+    assessment_id: string;
+    class_start_time: number;
+    complete_at: number;
+    create_at: number;
+    lesson_plan_name: string;
+    schedule_id: string;
+    schedule_title: string;
+    teacher_feedback: string;
 }
 
 export interface GetLiveClassesSummaryResponse {
-  attend: number;
-  items: [GetLiveClassesItem];
+    attend: number;
+    items: GetLiveClassesItem[];
 }
 
 export async function getLiveClassesSummary (client: AxiosInstance, request: GetLiveClassesSummaryRequest, config?: AxiosRequestConfig) {
@@ -120,14 +120,14 @@ export function useGetLiveClassesSummary (request: GetLiveClassesSummaryRequest,
 }
 
 export interface GetLearningOutComesRequest extends BaseRequest {
-  assessment_id: string;
-  student_id: string;
+    assessment_id: string;
+    student_id: string;
 }
 
 export interface GetLearningOutComesResponse {
-  id: string;
-  name: string;
-  status: string;
+    id: string;
+    name: string;
+    status: string;
 }
 
 export async function getLearningOutcomes (client: AxiosInstance, request: GetLearningOutComesRequest, config?: AxiosRequestConfig) {
@@ -156,47 +156,47 @@ export function useGetLearningOutcomes (request: GetLearningOutComesRequest, opt
 }
 
 export interface GetAppInsightMessagesRequest extends BaseRequest {
-  class_id: string;
-  student_id: string;
-  end_time: number;
+    class_id: string;
+    student_id: string;
+    end_time: number;
 }
 
 export interface AssignmentLabelItems {
-  assign_compare_3_week: number;
-  assign_compare_class: number;
-  assign_compare_class_3_week: number;
-  assign_compare_last_week: number;
-  assign_complete_count: number;
-  assignment_complete_count: number;
-  assignment_count: number;
+    assign_compare_3_week: number;
+    assign_compare_class: number;
+    assign_compare_class_3_week: number;
+    assign_compare_last_week: number;
+    assign_complete_count: number;
+    assignment_complete_count: number;
+    assignment_count: number;
 }
 
 export interface AttendanceLabelItems {
-  attend_compare_last_3_week: number;
-  attend_compare_last_week: number;
-  attended_count: number;
-  lo_compare_class: number;
-  lo_compare_class_3_week: number;
-  scheduled_count: number;
+    attend_compare_last_3_week: number;
+    attend_compare_last_week: number;
+    attended_count: number;
+    lo_compare_class: number;
+    lo_compare_class_3_week: number;
+    scheduled_count: number;
 }
 
 export interface LearningOutComeAchivement {
-  achieved_lo_count: number;
-  learnt_lo_count: number;
-  lo_compare_class: number;
-  lo_compare_class_3_week: number;
-  lo_compare_last_3_week: number;
-  lo_compare_last_week: number;
-  lo_review_compare_class: number;
+    achieved_lo_count: number;
+    learnt_lo_count: number;
+    lo_compare_class: number;
+    lo_compare_class_3_week: number;
+    lo_compare_last_3_week: number;
+    lo_compare_last_week: number;
+    lo_review_compare_class: number;
 }
 
 export interface GetAppInsightMessagesResponse {
-  assignment_label_id: string;
-  assignment_label_params: AssignmentLabelItems;
-  attedance_label_id: string;
-  attedance_label_params: AttendanceLabelItems;
-  learning_outcome_achivement_label_id: string;
-  learning_outcome_achivement_label_params: LearningOutComeAchivement;
+    assignment_label_id: string;
+    assignment_label_params: AssignmentLabelItems;
+    attedance_label_id: string;
+    attedance_label_params: AttendanceLabelItems;
+    learning_outcome_achivement_label_id: string;
+    learning_outcome_achivement_label_params: LearningOutComeAchivement;
 }
 
 export async function getAppInsightMessage (client: AxiosInstance, request: GetAppInsightMessagesRequest, config?: AxiosRequestConfig) {
