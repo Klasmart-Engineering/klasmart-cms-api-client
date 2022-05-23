@@ -17,6 +17,16 @@ import {
 export type AssessmentStatus = `complete` | `in_progress`;
 export type AssessmentSearchType = `home_fun_study`;
 export type AssessmentsOrder = `class_end_time` | `-class_end_time` | `complete_time` | `-complete_time`;
+export type AssessmentType = `OnlineClass` | `OfflineClass` | `Homework` | `Task` | `OnlineStudy` | `OfflineStudy`;
+export type AssessmentStudentStatus = `Participate` | `NotParticipate`;
+export type AssessmentStudentResultOutcomeStatus = `Unknown` | `NotCovered` | `NotAchieved` | `Achieved`;
+export enum AssessmentScore {
+    POOR = 1,
+    FAIR = 2,
+    AVERAGE = 3,
+    GOOD = 4,
+    EXCELLENT = 5,
+}
 
 export interface StudentAttachment {
     id: string;
@@ -120,6 +130,70 @@ export const GET_ASSESSMENTS_SUMMARY_QUERY_KEY: QueryKey = `getAssessmentsSummar
 export function useGetAssessmentsSummary (request: GetAssessmentsSummaryRequest, options?: RequestConfigQueryOptions<GetAssessmentsSummaryResponse>) {
     const { axiosClient } = useCmsApiClient();
     return useQuery([ GET_ASSESSMENTS_SUMMARY_QUERY_KEY, request ], () => getAssessmentsSummary(axiosClient, request, options?.config), options?.queryOptions);
+}
+
+export interface AssessmentStudent{
+    proccess_status: string;
+    student_id: string;
+    student_name: string;
+    status: AssessmentStudentStatus;
+    reviewer_comment: string;
+    results: AssessmentStudentResult[];
+}
+
+export interface AssessmentStudentResult{
+    answer: string;
+    assess_score: AssessmentScore;
+    attempted: boolean;
+    content_id: string;
+    score: number;
+    outcomes: AssessmentStudentResultOutcome[];
+}
+
+export interface AssessmentStudentResultOutcome{
+    outcome_id: string;
+    status: AssessmentStudentResultOutcomeStatus;
+}
+
+export interface GetAssessmentByIdRequest extends BaseRequest {
+    assessment_id: string;
+}
+
+export interface GetAssessmentByIdResponse{
+    id: string;
+    assessment_type: string;
+    class: ForeignIdName;
+    class_end_at: number;
+    class_length: number;
+    complete_at: number;
+    complete_rate: number;
+    description: string;
+    remaining_time: number;
+    room_id: string;
+    teachers: ForeignIdName[];
+    subjects: ForeignIdName[];
+    title: string;
+    status: AssessmentStatus;
+    students: AssessmentStudent[];
+    schedule_title: string;
+}
+
+export async function getAssessmentById (client: AxiosInstance, request: GetAssessmentByIdRequest, config?: AxiosRequestConfig){
+    const { assessment_id, ...rest } = request;
+    const resp = await client.get<GetAssessmentByIdResponse>(`/v1/assessments_v2/${assessment_id}`, {
+        params: {
+            ...rest,
+            ...config?.params,
+        },
+    });
+    return resp.data;
+}
+
+export const GET_ASSESSMENT_BY_ID_QUERY_KEY: QueryKey = `getAssessmentById`;
+
+export function useGetAssessmentById (request: GetAssessmentByIdRequest, options?: RequestConfigQueryOptions<GetAssessmentByIdResponse>) {
+    const { axiosClient } = useCmsApiClient();
+    return useQuery([ GET_ASSESSMENT_BY_ID_QUERY_KEY, request ], () => getAssessmentById(axiosClient, request, options?.config), options?.queryOptions);
 }
 
 export interface GetStudentAssessmentsRequest extends BaseRequest {
