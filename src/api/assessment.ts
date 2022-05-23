@@ -31,6 +31,7 @@ export enum AssessmentScore {
 export interface StudentAttachment {
     id: string;
     name: string;
+    review_attachment_id: string;
 }
 
 export interface StudentSchedule {
