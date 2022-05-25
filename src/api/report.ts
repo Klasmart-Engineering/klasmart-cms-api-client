@@ -34,6 +34,7 @@ export interface ReportAssignment {
     status: string;
     teacher_feedback: string;
     date_time_complete_at: string;
+    date_time_start_at: string;
 }
 
 export interface GetAssignmentsResponse {
@@ -84,6 +85,7 @@ export interface ReportLiveClass {
     schedule_title: string;
     teacher_feedback: string;
     date_time_complete_at: string;
+    date_time_start_at: string;
 }
 
 export interface GetLiveClassesSummaryResponse {

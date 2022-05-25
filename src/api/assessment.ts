@@ -177,6 +177,7 @@ export interface GetAssessmentByIdResponse{
     status: AssessmentStatus;
     students: AssessmentStudent[];
     schedule_title: string;
+    schedule_due_at: number;
 }
 
 export async function getAssessmentById (client: AxiosInstance, request: GetAssessmentByIdRequest, config?: AxiosRequestConfig){
