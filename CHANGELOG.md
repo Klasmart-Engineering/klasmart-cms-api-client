@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.1](https://github.com/KL-Engineering/kidsloop-cms-api-client/branches/compare/v2.3.1%0Dv2.3.0) (2022-05-25)
+
+
+### ♻️ Chores
+
+* add schedule_due_at, date_time_start_at (#9) ([71e31c4](https://github.com/KL-Engineering/kidsloop-cms-api-client/commits/71e31c472935f87289f597e80cf2fe9cb0560266))
+
 ## [2.3.0](https://github.com/KL-Engineering/kidsloop-cms-api-client/branches/compare/v2.3.0%0Dv2.2.3) (2022-05-23)
 
 
