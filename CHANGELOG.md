@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/KL-Engineering/kidsloop-cms-api-client/branches/compare/v2.4.0%0Dv2.3.1) (2022-05-31)
+
+
+### ✨ Features
+
+* nat-70 categorized by type of the schedule (#8) ([1584ee9](https://github.com/KL-Engineering/kidsloop-cms-api-client/commits/1584ee93831a4fba26bad5d617f0850486a3a006))
+
 ### [2.3.1](https://github.com/KL-Engineering/kidsloop-cms-api-client/branches/compare/v2.3.1%0Dv2.3.0) (2022-05-25)
 
 
