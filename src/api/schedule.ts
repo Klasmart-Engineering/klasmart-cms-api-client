@@ -26,6 +26,12 @@ export type ScheduleViewType = `day` | `work_week` | `week` | `month` | `year` |
 export type ScheduleLiveTokenType = `live` | `preview`;
 export type TimeBoundary = `intersect` | `union`;
 export type ReviewStatusType = `pending` | `success` | `failed`;
+export enum ScheduleStudyType {
+    NORMAL = `normal`,
+    HOME_FUN = `homefun`,
+    REVIEW = `review`,
+}
+
 export interface FeedbackAssignmentView {
     attachment_id: string;
     attachment_name: string;
@@ -182,6 +188,7 @@ export interface PostSchedulesTimeViewListRequest extends BaseRequest {
     time_zone_offset: number;
     view_type: ScheduleViewType;
     with_assessment_status?: boolean;
+    study_types?: ScheduleStudyType[];
 }
 
 export interface PostSchedulesTimeViewListResponse {
